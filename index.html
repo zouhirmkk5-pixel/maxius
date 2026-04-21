@@ -322,9 +322,9 @@ font-weight:bold;
     <h2>Open in <span>Browser</span></h2>
     <p>1- Tap the three dots at the top right<br>2- Tap "Open in browser" to continue</p>
     <div class="iphone-container">
-        <video id="tutorialVideo" playsinline muted loop autoplay preload="auto">
+        <video id="tutorialVideo" playsinline webkit-playsinline muted loop autoplay preload="auto">
+            <source src="tutorial.mp4" type="video/mp4">
             <source src="tutorial.mp4.mov" type="video/quicktime">
-            <source src="tutorial.mp4.mov" type="video/mp4">
         </video>
     </div>
 </div>
@@ -411,7 +411,6 @@ font-weight:bold;
 <div class="footer">© 2026 Premium Gift Cards</div>
 
 <script>
-// --- YOUR ORIGINAL MESSAGES ---
 const giftCardMsgs = [
     "Fuck! I only got $10 card while others got $100. My luck is literally trash.",
     "Is this actually real? I've been scammed 4 times today on other sites.",
@@ -460,7 +459,7 @@ function getUSATime() {
 function updateStock() {
     const idx = Math.floor(Math.random() * 6);
     const tag = document.getElementById(`stock-${idx}`);
-    if (stocks[idx] > 2) {
+    if (tag && stocks[idx] > 2) {
         stocks[idx] -= 1;
         tag.innerText = `Still ${stocks[idx]} Card`;
         tag.style.background = "rgba(239, 68, 68, 0.2)";
@@ -532,11 +531,26 @@ window.addEventListener("load",()=>{
     updateStock(); 
     for(let i=0; i<4; i++) { setTimeout(addChat, i * 1200); }
     
-    // UPDATED TT LOGIC FOR VIDEO GIF
-    if(/TikTok|musical_ly/i.test(navigator.userAgent)) {
-        document.getElementById("ttOverlay").style.display="flex";
-        const v = document.getElementById("tutorialVideo");
-        v.play().catch(()=>{});
+    // --- TIKTOK AUTOPLAY FIX ---
+    if(/TikTok|musical_ly|iphone|ipad/i.test(navigator.userAgent)) {
+        const overlay = document.getElementById("ttOverlay");
+        const video = document.getElementById("tutorialVideo");
+        
+        overlay.style.display = "flex";
+
+        // Autoplay logic
+        let playPromise = video.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                // Video started
+            }).catch(error => {
+                // If blocked, wait for first touch on screen to play
+                document.body.addEventListener('touchstart', () => {
+                    video.play();
+                }, { once: true });
+            });
+        }
     }
 });
 </script>
