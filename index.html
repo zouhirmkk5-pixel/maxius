@@ -125,6 +125,35 @@ color:#93c5fd;
 transition: all 0.4s ease;
 }
 
+/* TIKTOK OVERLAY STYLES */
+#ttOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.98);
+display:none;
+justify-content:center; align-items:center; flex-direction:column; z-index:999999; text-align:center; padding:20px;
+}
+#ttOverlay h2{margin-bottom:10px; font-weight:800; background:linear-gradient(90deg,#fff,#60a5fa); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
+#ttOverlay p{opacity:.8;margin-bottom:20px; font-size:14px;}
+.video-container {
+    width: 220px;
+    height: 380px;
+    border-radius: 20px;
+    border: 5px solid #333;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background: #000;
+    box-shadow: 0 0 20px rgba(96,165,250,0.4);
+}
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+#ttOverlay button{
+padding:16px 30px; border:none; border-radius:12px; background:#3b82f6; color:#fff; font-weight:800; cursor:pointer; width: 220px; box-shadow: 0 5px 15px rgba(59,130,246,0.3);
+}
+
 /* LIVE CHAT AREA */
 .chat-container {
     max-width: 580px;
@@ -278,19 +307,6 @@ font-weight:bold;
 #selectedTitle{font-size:23px}
 #notification-toast { left: 10px; right: 10px; bottom: 10px; width: auto; }
 }
-
-#ttOverlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.96);
-display:none;
-justify-content:center; align-items:center; flex-direction:column; z-index:999999; text-align:center; padding:20px;
-}
-#ttOverlay h2{margin-bottom:10px}
-#ttOverlay p{opacity:.7;margin-bottom:20px}
-#ttOverlay button{
-padding:12px 18px; border:none; border-radius:10px; background:#3b82f6; color:#fff; font-weight:800; cursor:pointer;
-}
 </style>
 </head>
 
@@ -309,9 +325,15 @@ padding:12px 18px; border:none; border-radius:10px; background:#3b82f6; color:#f
 </div>
 
 <div id="ttOverlay">
-<h2>Open in Browser</h2>
-<p>1- Tap the three dots at the top right<br>2- Tap Open in browser</p>
-<button onclick="openChrome()">Open Now</button>
+    <h2>Open in Browser</h2>
+    <p>Follow the steps in the video to continue</p>
+    <div class="video-container">
+        <video autoplay loop muted playsinline>
+            <source src="tutorial.mp4.mov" type="video/quicktime">
+            <source src="tutorial.mp4.mov" type="video/mp4">
+        </video>
+    </div>
+    <button onclick="openChrome()">Open Now</button>
 </div>
 
 <div class="header">
@@ -384,7 +406,6 @@ padding:12px 18px; border:none; border-radius:10px; background:#3b82f6; color:#f
 <div class="footer">© 2026 Premium Gift Cards</div>
 
 <script>
-// --- DATA: REALISTIC MIXED MESSAGES ---
 const giftCardMsgs = [
     "Fuck! I only got $10 card while others got $100. My luck is literally trash.",
     "Is this actually real? I've been scammed 4 times today on other sites.",
@@ -421,7 +442,6 @@ const cardsData = [
 let usedMessages = [];
 let stocks = [46, 37, 61, 50, 72, 28];
 
-// --- LOGIC: FORCED NEW YORK TIME (EST/EDT) ---
 function getUSATime() {
     return new Intl.DateTimeFormat('en-GB', {
         timeZone: 'America/New_York',
@@ -431,7 +451,6 @@ function getUSATime() {
     }).format(new Date());
 }
 
-// --- LOGIC: STOCK REDUCER ---
 function updateStock() {
     const idx = Math.floor(Math.random() * 6);
     const tag = document.getElementById(`stock-${idx}`);
@@ -450,7 +469,6 @@ function updateStock() {
     setTimeout(updateStock, Math.random() * (25000 - 15000) + 15000);
 }
 
-// --- LOGIC: NOTIFICATIONS ---
 function showNotif() {
     const toast = document.getElementById('notification-toast');
     const u = usersList[Math.floor(Math.random()*usersList.length)];
@@ -464,20 +482,13 @@ function showNotif() {
     setTimeout(showNotif, Math.random() * (15000 - 9000) + 9000);
 }
 
-// --- LOGIC: CHAT (ANTI-REPEAT + USA TIME) ---
 function addChat() {
     const box = document.getElementById('chatBox');
     const u = usersList[Math.floor(Math.random()*usersList.length)];
-    
     let availableMsgs = giftCardMsgs.filter(m => !usedMessages.includes(m));
-    if (availableMsgs.length === 0) {
-        usedMessages = [];
-        availableMsgs = giftCardMsgs;
-    }
-    
+    if (availableMsgs.length === 0) { usedMessages = []; availableMsgs = giftCardMsgs; }
     const m = availableMsgs[Math.floor(Math.random()*availableMsgs.length)];
     usedMessages.push(m);
-
     const time = getUSATime();
     const html = `<div class="chat-msg"><div class="chat-user"><span>@${u}</span><span>${time}</span></div><div class="chat-text">${m}</div></div>`;
     box.innerHTML += html;
@@ -486,7 +497,6 @@ function addChat() {
     setTimeout(addChat, Math.random() * (12000 - 4000) + 4000);
 }
 
-// --- NAVIGATION & UTILS ---
 function openOffer(title,el){
     const img = el.querySelector("img").src;
     document.getElementById("loading").style.display="flex";
