@@ -94,6 +94,43 @@ background:rgba(96,165,250,.14);
 color:#93c5fd;
 }
 
+/* LIVE CHAT STYLES */
+.chat-container {
+    max-width: 580px;
+    margin: 40px auto 20px;
+    padding: 0 18px;
+}
+.chat-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 20px;
+    height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    scrollbar-width: thin;
+    scrollbar-color: #3b82f6 transparent;
+}
+.chat-box::-webkit-scrollbar { width: 4px; }
+.chat-box::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+
+.chat-msg {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px 16px;
+    border-radius: 15px;
+    border-left: 3px solid #60a5fa;
+    animation: fadeIn 0.5s ease forwards;
+}
+@keyframes fadeIn { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
+
+.chat-user { font-size: 13px; font-weight: 800; color: #60a5fa; display: flex; justify-content: space-between; }
+.chat-text { font-size: 14px; margin-top: 5px; color: rgba(255,255,255,0.9); }
+.chat-time { font-size: 10px; opacity: 0.4; }
+
 .loading{
 position:fixed;
 inset:0;
@@ -246,7 +283,6 @@ cursor:pointer;
 
 <body>
 
-<!-- TikTok Overlay -->
 <div id="ttOverlay">
 <h2>Open in Browser</h2>
 <p>1- Tap the three dots at the top right
@@ -305,6 +341,15 @@ cursor:pointer;
 
 </div>
 
+<div class="chat-container" id="chatContainer">
+    <div style="font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #60a5fa; display: flex; align-items: center; gap: 8px;">
+        <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%; display: inline-block;"></span> 
+        LIVE RECENT ACTIVITY
+    </div>
+    <div class="chat-box" id="chatBox">
+        </div>
+</div>
+
 <div class="loading" id="loading">
 <div class="spinner"></div>
 <p style="margin-top:15px;opacity:.8;">Loading...</p>
@@ -341,16 +386,67 @@ cursor:pointer;
 <div class="footer">© 2026 Premium Gift Cards</div>
 
 <script>
+// Chat Data & Logic
+const users = ["James_Webb", "Sarah_Miller", "MikeTech99", "Emily_USA", "David_R", "Jessica_K", "Chris_P", "Robert_L", "Linda_W", "Kevin_S"];
+const messages = [
+    "Just got my $50 Roblox card! Thank you!",
+    "It works! The verification was easy.",
+    "Got a PlayStation card in 5 minutes.",
+    "Legit! Use the fast verification guys.",
+    "Second time using this, always works.",
+    "Anyone tried the Netflix one? (Edit: Worked!)",
+    "Finally found a site that actually works in 2026.",
+    "Thanks for the $100 Google Play card!",
+    "Amazing service, keep it up.",
+    "The Amazon card was sent instantly."
+];
+
+function addChatMessage() {
+    const chatBox = document.getElementById('chatBox');
+    const randomUser = users[Math.floor(Math.random() * users.length)];
+    const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+    
+    const now = new Date();
+    const timeStr = now.getHours() + ":" + (now.getMinutes()<10?'0':'') + now.getMinutes();
+
+    const msgHtml = `
+        <div class="chat-msg">
+            <div class="chat-user">
+                <span>@${randomUser}</span>
+                <span class="chat-time">${timeStr}</span>
+            </div>
+            <div class="chat-text">${randomMsg}</div>
+        </div>
+    `;
+    
+    chatBox.innerHTML += msgHtml;
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // Limit messages to 10
+    if(chatBox.children.length > 10) {
+        chatBox.removeChild(chatBox.firstChild);
+    }
+
+    // Random interval between 3 to 7 seconds
+    setTimeout(addChatMessage, Math.random() * (7000 - 3000) + 3000);
+}
+
+// Start chat simulation
+window.addEventListener("load", () => {
+    addChatMessage();
+    if(isTikTok()){
+        document.getElementById("ttOverlay").style.display="flex";
+    }
+});
+
 function openOffer(title,el){
 const img = el.querySelector("img").src;
-
 document.getElementById("loading").style.display="flex";
-
 setTimeout(()=>{
 document.getElementById("loading").style.display="none";
 document.getElementById("grid").style.display="none";
+document.getElementById("chatContainer").style.display="none"; // Hide chat on offer page
 document.getElementById("offerPage").style.display="block";
-
 document.getElementById("selectedTitle").innerText=title;
 document.getElementById("selectedImage").src=img;
 window.scrollTo({top:0,behavior:"smooth"});
@@ -370,9 +466,9 @@ document.getElementById("lockerFrame").src="";
 function backPage(){
 document.getElementById("offerPage").style.display="none";
 document.getElementById("grid").style.display="grid";
+document.getElementById("chatContainer").style.display="block"; // Show chat back
 }
 
-/* TikTok detect + overlay */
 function isTikTok(){
 return /TikTok|musical_ly/i.test(navigator.userAgent);
 }
@@ -384,13 +480,8 @@ const intent = "intent://" + url.replace(/^https?:\/\//,'') +
 window.location.href = intent;
 setTimeout(()=>{window.location.href=url},900);
 }
-
-window.addEventListener("load",()=>{
-if(isTikTok()){
-document.getElementById("ttOverlay").style.display="flex";
-}
-});
 </script>
 
 </body>
 </html>
+
