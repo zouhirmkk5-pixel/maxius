@@ -10,12 +10,12 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;background:#050505;color:#fff;overflow-x:hidden;min-height:100vh;}
 
-/* Background overlay logic */
+/* --- OVERLAY TIKTOK --- */
 #ttOverlay {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.98);
-    display: none;
+    display: none; /* Ghadi it-ftha ghir f TikTok browser */
     justify-content: center; 
     align-items: center; 
     flex-direction: column; 
@@ -23,39 +23,40 @@ body{font-family:'Inter',sans-serif;background:#050505;color:#fff;overflow-x:hid
     text-align: center; 
     padding: 20px;
 }
-#ttOverlay h2 { font-size: 28px; font-weight: 800; margin-bottom: 10px; color: #fff; }
+#ttOverlay h2 { font-size: 26px; font-weight: 800; margin-bottom: 10px; color: #fff; }
 #ttOverlay h2 span { color: #60a5fa; }
 #ttOverlay p { opacity: .7; margin-bottom: 25px; font-size: 14px; line-height: 1.4; }
 
 .iphone-container {
     position: relative;
-    width: 260px;
-    height: 520px;
+    width: 250px;
+    height: 500px;
     background: #000;
     border-radius: 40px;
-    padding: 10px;
+    padding: 8px;
     border: 4px solid #1a1a1a;
-    box-shadow: 0 0 50px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.3);
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-/* GIF Styling */
 #tutorialGif {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 30px;
+    border-radius: 32px;
 }
 
-/* Hide broken image icon if GIF is missing */
-img:not([src]), img[src=""] { opacity: 0; }
+/* --- UI COMPONENTS --- */
+.header{text-align:center;padding:34px 15px 20px}
+.title{font-size:32px;font-weight:800;background:linear-gradient(90deg,#fff,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;padding:15px;max-width:500px;margin:auto;}
+.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:12px;cursor:pointer;text-align:center;}
+.card img{width:100%;height:110px;object-fit:contain;background:#fff;border-radius:15px;padding:10px;}
+.name{margin-top:10px;font-weight:700;font-size:14px;}
 
-/* Rest of the page styles */
-.header{text-align:center;padding:34px 15px 20px}.title{font-size:34px;font-weight:800;background:linear-gradient(90deg,#fff,#60a5fa,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}.sub{margin-top:10px;font-size:14px;opacity:.65}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;padding:18px;max-width:580px;margin:auto;}.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:24px;padding:14px;cursor:pointer;transition:.25s ease;backdrop-filter:blur(12px);box-shadow:0 15px 30px rgba(0,0,0,.45);}.card:hover{transform:translateY(-6px);}.card img{width:100%;height:125px;object-fit:contain;background:#fff;padding:14px;border-radius:18px;}.name{margin-top:12px;font-size:15px;font-weight:800}.price{margin-top:6px;font-size:13px;opacity:.75}.tag{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;font-size:11px;background:rgba(96,165,250,.14);color:#93c5fd;}.loading{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;justify-content:center;align-items:center;z-index:999;}.spinner{width:62px;height:62px;border-radius:50%;border:4px solid rgba(255,255,255,.08);border-top:4px solid #60a5fa;animation:spin 1s linear infinite;}@keyframes spin{100%{transform:rotate(360deg)}}.offerPage{display:none;padding:20px}.box{max-width:540px;margin:auto;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:24px;padding:22px;}.selectedImage{width:100%;height:190px;object-fit:contain;background:#fff;padding:18px;border-radius:18px;margin-bottom:16px;}#selectedTitle{font-size:28px;font-weight:800}.option{display:flex;justify-content:space-between;align-items:center;padding:15px;margin-top:12px;border-radius:16px;background:rgba(255,255,255,.04);}.option button{background:linear-gradient(90deg,#22c55e,#16a34a);border:none;cursor:pointer;font-weight:700;border-radius:12px;padding:11px 16px;color:#fff;}.back{width:100%;margin-top:16px;background:#1f2937;border:none;cursor:pointer;font-weight:700;border-radius:12px;padding:11px 16px;color:#fff;}#lockerModal{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;justify-content:center;align-items:center;z-index:9999;}.lockerBox{width:90%;height:85%;max-width:500px;background:#111;border-radius:16px;overflow:hidden;position:relative;}.lockerBox iframe{width:100%;height:100%;border:none;}.closeBtn{position:absolute;top:10px;right:10px;background:red;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:bold;}.footer{text-align:center;padding:26px;font-size:12px;opacity:.45}
-@media(max-width:480px){.grid{grid-template-columns:1fr}.title{font-size:28px}}
+#lockerModal{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;justify-content:center;align-items:center;z-index:9999;}
+.lockerBox{width:90%;height:80%;background:#111;border-radius:15px;overflow:hidden;}
+iframe{width:100%;height:100%;border:none;}
 </style>
 </head>
 
@@ -63,68 +64,53 @@ img:not([src]), img[src=""] { opacity: 0; }
 
 <div id="ttOverlay">
     <h2>Open in <span>Browser</span></h2>
-    <p>1- Tap the three dots at the top right<br>2- Tap "Open in browser" to continue</p>
+    <p>Tap the three dots (<b>...</b>) at the top right<br>and select <b>"Open in browser"</b></p>
     <div class="iphone-container">
-        <img src="tutorial.gif" id="tutorialGif" alt="Loading Tutorial...">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJibmtpZzRreXF6YmpxZzRreXF6YmpxZzRreXF6YmpxZzRreXF6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKMGpxxZESFf3m8/giphy.gif" id="tutorialGif" alt="Tutorial">
     </div>
 </div>
 
 <div class="header">
-<div class="title">PREMIUM GIFT CARDS</div>
-<div class="sub">Select your card and continue</div>
+    <div class="title">GIFT CARDS HUB</div>
 </div>
 
-<div class="grid" id="grid">
-    <div class="card" onclick="openOffer('ROBLOX 20$-50$ CARD', this)">
+<div class="grid">
+    <div class="card" onclick="goLocker()">
         <img src="https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png">
         <div class="name">ROBLOX</div>
-        <div class="price">$20 - $50</div>
-        <div class="tag">Still 46 Card</div>
     </div>
-    <div class="card" onclick="openOffer('PLAYSTATION 25$-50$ CARD', this)">
+    <div class="card" onclick="goLocker()">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg">
         <div class="name">PLAYSTATION</div>
-        <div class="price">$25 - $50</div>
-        <div class="tag">Still 37 Card</div>
     </div>
 </div>
 
-<div class="loading" id="loading"><div class="spinner"></div></div>
-
-<div class="offerPage" id="offerPage">
-<div class="box">
-<img id="selectedImage" class="selectedImage">
-<div id="selectedTitle"></div>
-<div class="option"><div>Premium Access</div><button onclick="go()">Start</button></div>
-<button class="back" onclick="backPage()">← Back</button>
+<div id="lockerModal">
+    <div class="lockerBox">
+        <iframe src="https://checkmyapp.store/cl/i/pqq622"></iframe>
+    </div>
 </div>
-</div>
-
-<div id="lockerModal"><div class="lockerBox"><iframe id="lockerFrame"></iframe><button class="closeBtn" onclick="closeLocker()">✕</button></div></div>
-<div class="footer">© 2026 Premium Gift Cards</div>
 
 <script>
-function openOffer(title,el){
-    document.getElementById("loading").style.display="flex";
-    setTimeout(()=>{
-        document.getElementById("loading").style.display="none";
-        document.getElementById("grid").style.display="none";
-        document.getElementById("offerPage").style.display="block";
-        document.getElementById("selectedTitle").innerText=title;
-        document.getElementById("selectedImage").src=el.querySelector("img").src;
-    },800);
-}
-
-function go(){ document.getElementById("lockerModal").style.display="flex"; document.getElementById("lockerFrame").src="https://checkmyapp.store/cl/i/pqq622"; }
-function closeLocker(){ document.getElementById("lockerModal").style.display="none"; }
-function backPage(){ document.getElementById("offerPage").style.display="none"; document.getElementById("grid").style.display="grid"; }
-
-window.addEventListener("load",()=>{
-    // Kat-detecti TikTok browser hna
-    if(/TikTok|musical_ly/i.test(navigator.userAgent)) {
-        document.getElementById("ttOverlay").style.display="flex";
+    function goLocker() {
+        document.getElementById("lockerModal").style.display = "flex";
     }
-});
+
+    window.addEventListener("load", () => {
+        // Detection dyal TikTok
+        const isTikTok = /TikTok|musical_ly/i.test(navigator.userAgent);
+        
+        if (isTikTok) {
+            document.getElementById("ttOverlay").style.display = "flex";
+            
+            // Backup: Ila l-lien dyal l-GIF makhdamch, n-bedloh b wahed akhor sghir
+            const gifImg = document.getElementById("tutorialGif");
+            gifImg.onerror = function() {
+                this.src = "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJibmtpZzRreXF6YmpxZzRreXF6YmpxZzRreXF6YmpxZzRreXF6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/uSf0YyK6U3F3G/giphy.gif";
+            };
+        }
+    });
 </script>
+
 </body>
 </html>
