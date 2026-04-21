@@ -384,8 +384,31 @@ padding:12px 18px; border:none; border-radius:10px; background:#3b82f6; color:#f
 <div class="footer">© 2026 Premium Gift Cards</div>
 
 <script>
-// --- DATA ---
-const usersList = ["Alex_Tech", "Sarah_USA", "Daniel.H", "Emily_99", "Mike_Gamer", "Jessica.L", "Chris_Vip", "Sophia_M", "Ryan.K", "Olivia_S", "Tyler_P", "Ava_N", "Matthew_R", "Isabella_G", "Andrew.T", "Mia_F", "Joshua_D", "Chloe_B", "David.W", "Madison_C", "Nathan_V", "Lily.K", "Zoe_M", "Luke_88"];
+// --- DATA: MIXED MESSAGES (FERHANIN & M3SSBIN) ---
+const giftCardMsgs = [
+    "OMG IT WORKED!! Just got $50 Roblox. My heart is racing 🔥",
+    "Ugh, my luck is trash today. I only got a $10 card.",
+    "Is this real? YES! Just redeemed it on PSN.",
+    "Why is the $100 card always unavailable for me?? Fuck this.",
+    "Legit site, the Amazon card was sent instantly.",
+    "Verification was easy, thanks for the $50 card.",
+    "Only $10? I wasted 5 minutes for this... better than nothing.",
+    "I thought this was a joke until I saw the balance on my PSN.",
+    "Finally found a site that actually works. Got $25 Google Play.",
+    "Lies... wait, nevermind. It just showed up in my inbox.",
+    "WHOA! Just redeemed $75 Apple card. Thank you so much!",
+    "I was skeptical but my friend just showed me his $100 Amazon balance.",
+    "Is it just me or is verification slow as hell today?",
+    "Probably fake like the others... Wait, it actually loaded!",
+    "Just use a real email or it won't send the code guys.",
+    "I was 99% sure this was a scam. Glad I was wrong.",
+    "The $50 card didn't work for me, but the $10 one did. Weird.",
+    "Just redeemed $10 Google Play. Finally!",
+    "Anyone online? Which offer is the easiest to finish?",
+    "Took forever but I finally got my skins. Legit!"
+];
+
+const usersList = ["Alex_NY", "Sarah_LA", "Daniel.H", "Emily_99", "Mike_Gamer", "Jess_Vip", "Chris_USA", "Sophia_M", "Ryan.K", "Olivia_S", "Ava_N", "Mia_F", "Chloe_B", "David.W", "Nathan_V", "Zoe_M"];
 
 const cardsData = [
     {n: "Roblox $50", img: "https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png"},
@@ -395,51 +418,18 @@ const cardsData = [
     {n: "Google Play $100", img: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg"}
 ];
 
-const giftCardMsgs = [
-    "Just got my Roblox code! It actually works 🔥",
-    "Verification was easy, thanks for the $50 card.",
-    "Is this real? YES! Just redeemed it on PSN.",
-    "Legit site, the Amazon card was sent instantly.",
-    "Verified and got my Apple card. Love it!",
-    "Verification was a bit slow but the code is 100% real.",
-    "Finally found a site that doesn't scam. Got $25 Google Play.",
-    "My brother told me about this, just got my first card!",
-    "I was skeptical but $100 Amazon just added to my account.",
-    "The best site for gift cards, highly recommended!",
-    "Wow, just redeemed my Netflix code. Watching movies now!",
-    "Simple and fast. Verification took only one offer.",
-    "Just saved $50 on my next game purchase. Thank you!!",
-    "Codes are fresh. My Roblox account is stacked now.",
-    "Second time using this today. Both codes worked fine.",
-    "Great community! Verification is very straightforward.",
-    "I'm from USA and it works perfectly here.",
-    "Just got $100 Google Play. I can finally buy those skins!",
-    "The PSN card was valid. Redeeming was a breeze.",
-    "Thanks a lot! This made my day.",
-    "Anyone else tried the $150 Amazon one? It worked for me!",
-    "I thought it was a joke until the code popped up on my screen.",
-    "Does this work in UK? Edit: Yes, just got my Xbox card!",
-    "Finally, a way to get Roblox for free. My kids are happy.",
-    "The verification took me 3 minutes. Totally worth it.",
-    "No fake human verification here, just a simple task and done.",
-    "I just tried the Google Play one, works like a charm.",
-    "Shoutout to the devs, this is life saving for gamers.",
-    "I have shared this with all my friends, it's amazing.",
-    "Just redeemed a $25 Apple card. Gonna buy some music!",
-    "Can't believe I found this. Working 2026!",
-    "Just got my Netflix subscription for free lol.",
-    "The process is very smooth on mobile.",
-    "I'm surprised how fast the code arrived.",
-    "My PlayStation wallet is full now. Time to play!",
-    "Roblox $50 card claimed. Proof on my profile!",
-    "Is there a limit? I just got 2 cards today.",
-    "The most reliable site I've seen so far.",
-    "I was looking for this everywhere. Thanks guys!",
-    "Easy task, fast code. 10/10 recommended."
-];
-
 let usedMessages = [];
 let stocks = [46, 37, 61, 50, 72, 28];
+
+// --- LOGIC: USA TIME (New York) ---
+function getUSATime() {
+    return new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/New_York',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    }).format(new Date());
+}
 
 // --- LOGIC: STOCK REDUCER ---
 function updateStock() {
@@ -465,18 +455,16 @@ function showNotif() {
     const toast = document.getElementById('notification-toast');
     const u = usersList[Math.floor(Math.random()*usersList.length)];
     const c = cardsData[Math.floor(Math.random()*cardsData.length)];
-    const now = new Date();
-    const time = (now.getHours() < 10 ? '0' : '') + now.getHours() + ":" + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
     document.getElementById('notif-user').innerText = "@" + u;
     document.getElementById('notif-img').src = c.img;
     document.getElementById('notif-card-name').innerText = c.n + " Card";
-    document.getElementById('notif-time').innerText = "Today at " + time;
+    document.getElementById('notif-time').innerText = "Today at " + getUSATime();
     toast.classList.add('show');
     setTimeout(() => { toast.classList.remove('show'); }, 4000);
     setTimeout(showNotif, Math.random() * (15000 - 9000) + 9000);
 }
 
-// --- LOGIC: CHAT (ANTI-REPEAT) ---
+// --- LOGIC: CHAT (ANTI-REPEAT + USA TIME) ---
 function addChat() {
     const box = document.getElementById('chatBox');
     const u = usersList[Math.floor(Math.random()*usersList.length)];
@@ -490,8 +478,7 @@ function addChat() {
     const m = availableMsgs[Math.floor(Math.random()*availableMsgs.length)];
     usedMessages.push(m);
 
-    const now = new Date();
-    const time = (now.getHours() < 10 ? '0' : '') + now.getHours() + ":" + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
+    const time = getUSATime();
     const html = `<div class="chat-msg"><div class="chat-user"><span>@${u}</span><span>${time}</span></div><div class="chat-text">${m}</div></div>`;
     box.innerHTML += html;
     box.scrollTop = box.scrollHeight;
@@ -523,7 +510,6 @@ function openChrome(){ const url = window.location.href; window.location.href = 
 window.addEventListener("load",()=>{
     showNotif();
     updateStock(); 
-    // Fill chat with some initial messages
     for(let i=0; i<4; i++) { setTimeout(addChat, i * 1200); }
     if(isTikTok()) document.getElementById("ttOverlay").style.display="flex";
 });
