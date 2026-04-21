@@ -8,31 +8,9 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{
-font-family:'Inter',sans-serif;
-background:#050505;
-color:#fff;
-overflow-x:hidden;
-min-height:100vh;
-}
+body{font-family:'Inter',sans-serif;background:#050505;color:#fff;overflow-x:hidden;min-height:100vh;}
 
-body::before{
-content:"";
-position:fixed;
-inset:0;
-background:
-radial-gradient(circle at 15% 20%,rgba(59,130,246,.16),transparent 25%),
-radial-gradient(circle at 85% 25%,rgba(168,85,247,.12),transparent 25%),
-radial-gradient(circle at 50% 85%,rgba(34,197,94,.10),transparent 25%);
-animation:bgMove 10s ease-in-out infinite alternate;
-z-index:-2;
-}
-
-@keyframes bgMove{
-100%{transform:scale(1.12) translateY(-18px);}
-}
-
-/* --- TT OVERLAY GIF STYLE --- */
+/* Background overlay logic */
 #ttOverlay {
     position: fixed;
     inset: 0;
@@ -51,95 +29,33 @@ z-index:-2;
 
 .iphone-container {
     position: relative;
-    width: 250px;
-    height: 500px;
+    width: 260px;
+    height: 520px;
     background: #000;
     border-radius: 40px;
-    padding: 8px;
+    padding: 10px;
     border: 4px solid #1a1a1a;
-    box-shadow: 0 0 50px rgba(59, 130, 246, 0.5);
+    box-shadow: 0 0 50px rgba(59, 130, 246, 0.3);
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* HNA FIN BEDDELNA L-VIDEO B GIF */
+/* GIF Styling */
 #tutorialGif {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 32px;
+    border-radius: 30px;
 }
 
-/* NOTIFICATION STYLE */
-#notification-toast {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background: rgba(10, 10, 10, 0.98);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    padding: 14px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    z-index: 10000;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-    transform: translateX(-160%);
-    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    max-width: 320px;
-}
-#notification-toast.show { transform: translateX(0); }
-.notif-img-container {
-    width: 45px; height: 45px; background: #fff; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 5px;
-}
-.notif-img-container img { width: 100%; height: 100%; object-fit: contain; }
-.notif-content { font-size: 13px; line-height: 1.4; }
-.notif-user { font-weight: 800; color: #60a5fa; }
-.notif-card-name { color: #a855f7; font-weight: 700; }
-.notif-time { display: block; font-size: 10px; opacity: 0.5; margin-top: 3px; }
+/* Hide broken image icon if GIF is missing */
+img:not([src]), img[src=""] { opacity: 0; }
 
-.header{text-align:center;padding:34px 15px 20px}
-.title{font-size:34px;font-weight:800;background:linear-gradient(90deg,#fff,#60a5fa,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.sub{margin-top:10px;font-size:14px;opacity:.65}
-
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;padding:18px;max-width:580px;margin:auto;}
-.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:24px;padding:14px;cursor:pointer;transition:.25s ease;backdrop-filter:blur(12px);box-shadow:0 15px 30px rgba(0,0,0,.45);}
-.card:hover{transform:translateY(-6px);}
-.card img{width:100%;height:125px;object-fit:contain;background:#fff;padding:14px;border-radius:18px;}
-.name{margin-top:12px;font-size:15px;font-weight:800}
-.price{margin-top:6px;font-size:13px;opacity:.75}
-.tag{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;font-size:11px;background:rgba(96,165,250,.14);color:#93c5fd;}
-
-.chat-container {max-width: 580px;margin: 40px auto 20px;padding: 0 18px;}
-.chat-box {background: rgba(255, 255, 255, 0.03);border: 1px solid rgba(255, 255, 255, 0.08);border-radius: 20px;padding: 20px;height: 300px;overflow-y: auto;display: flex;flex-direction: column;gap: 15px;scrollbar-width: none;}
-.chat-msg {background: rgba(255, 255, 255, 0.05);padding: 12px 16px;border-radius: 15px;border-left: 3px solid #60a5fa;}
-
-.loading{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;justify-content:center;align-items:center;z-index:999;}
-.spinner{width:62px;height:62px;border-radius:50%;border:4px solid rgba(255,255,255,.08);border-top:4px solid #60a5fa;animation:spin 1s linear infinite;}
-@keyframes spin{100%{transform:rotate(360deg)}}
-
-.offerPage{display:none;padding:20px}
-.box{max-width:540px;margin:auto;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:24px;padding:22px;}
-.selectedImage{width:100%;height:190px;object-fit:contain;background:#fff;padding:18px;border-radius:18px;margin-bottom:16px;}
-#selectedTitle{font-size:28px;font-weight:800}
-
-.option{display:flex;justify-content:space-between;align-items:center;padding:15px;margin-top:12px;border-radius:16px;background:rgba(255,255,255,.04);}
-.option button{background:linear-gradient(90deg,#22c55e,#16a34a);border:none;cursor:pointer;font-weight:700;border-radius:12px;padding:11px 16px;color:#fff;}
-.back{width:100%;margin-top:16px;background:#1f2937;border:none;cursor:pointer;font-weight:700;border-radius:12px;padding:11px 16px;color:#fff;}
-
-#lockerModal{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;justify-content:center;align-items:center;z-index:9999;}
-.lockerBox{width:90%;height:85%;max-width:500px;background:#111;border-radius:16px;overflow:hidden;position:relative;}
-.lockerBox iframe{width:100%;height:100%;border:none;}
-.closeBtn{position:absolute;top:10px;right:10px;background:red;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:bold;}
-
-.footer{text-align:center;padding:26px;font-size:12px;opacity:.45}
-
-@media(max-width:480px){
-.grid{grid-template-columns:1fr}
-.title{font-size:28px}
-#notification-toast { left: 10px; right: 10px; bottom: 10px; width: auto; }
-}
+/* Rest of the page styles */
+.header{text-align:center;padding:34px 15px 20px}.title{font-size:34px;font-weight:800;background:linear-gradient(90deg,#fff,#60a5fa,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}.sub{margin-top:10px;font-size:14px;opacity:.65}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;padding:18px;max-width:580px;margin:auto;}.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:24px;padding:14px;cursor:pointer;transition:.25s ease;backdrop-filter:blur(12px);box-shadow:0 15px 30px rgba(0,0,0,.45);}.card:hover{transform:translateY(-6px);}.card img{width:100%;height:125px;object-fit:contain;background:#fff;padding:14px;border-radius:18px;}.name{margin-top:12px;font-size:15px;font-weight:800}.price{margin-top:6px;font-size:13px;opacity:.75}.tag{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;font-size:11px;background:rgba(96,165,250,.14);color:#93c5fd;}.loading{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;justify-content:center;align-items:center;z-index:999;}.spinner{width:62px;height:62px;border-radius:50%;border:4px solid rgba(255,255,255,.08);border-top:4px solid #60a5fa;animation:spin 1s linear infinite;}@keyframes spin{100%{transform:rotate(360deg)}}.offerPage{display:none;padding:20px}.box{max-width:540px;margin:auto;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:24px;padding:22px;}.selectedImage{width:100%;height:190px;object-fit:contain;background:#fff;padding:18px;border-radius:18px;margin-bottom:16px;}#selectedTitle{font-size:28px;font-weight:800}.option{display:flex;justify-content:space-between;align-items:center;padding:15px;margin-top:12px;border-radius:16px;background:rgba(255,255,255,.04);}.option button{background:linear-gradient(90deg,#22c55e,#16a34a);border:none;cursor:pointer;font-weight:700;border-radius:12px;padding:11px 16px;color:#fff;}.back{width:100%;margin-top:16px;background:#1f2937;border:none;cursor:pointer;font-weight:700;border-radius:12px;padding:11px 16px;color:#fff;}#lockerModal{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;justify-content:center;align-items:center;z-index:9999;}.lockerBox{width:90%;height:85%;max-width:500px;background:#111;border-radius:16px;overflow:hidden;position:relative;}.lockerBox iframe{width:100%;height:100%;border:none;}.closeBtn{position:absolute;top:10px;right:10px;background:red;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:bold;}.footer{text-align:center;padding:26px;font-size:12px;opacity:.45}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.title{font-size:28px}}
 </style>
 </head>
 
@@ -149,15 +65,7 @@ z-index:-2;
     <h2>Open in <span>Browser</span></h2>
     <p>1- Tap the three dots at the top right<br>2- Tap "Open in browser" to continue</p>
     <div class="iphone-container">
-        <img src="tutorial.gif" id="tutorialGif" alt="Tutorial GIF">
-    </div>
-</div>
-
-<div id="notification-toast">
-    <div class="notif-img-container"><img src="" id="notif-img"></div>
-    <div class="notif-content">
-        <span class="notif-user" id="notif-user"></span> successfully claimed a <span class="notif-card-name" id="notif-card-name"></span>
-        <span class="notif-time" id="notif-time"></span>
+        <img src="tutorial.gif" id="tutorialGif" alt="Loading Tutorial...">
     </div>
 </div>
 
@@ -171,18 +79,14 @@ z-index:-2;
         <img src="https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png">
         <div class="name">ROBLOX</div>
         <div class="price">$20 - $50</div>
-        <div class="tag" id="stock-0">Still 46 Card</div>
+        <div class="tag">Still 46 Card</div>
     </div>
     <div class="card" onclick="openOffer('PLAYSTATION 25$-50$ CARD', this)">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg">
         <div class="name">PLAYSTATION</div>
         <div class="price">$25 - $50</div>
-        <div class="tag" id="stock-1">Still 37 Card</div>
+        <div class="tag">Still 37 Card</div>
     </div>
-</div>
-
-<div class="chat-container" id="chatArea">
-    <div class="chat-box" id="chatBox"></div>
 </div>
 
 <div class="loading" id="loading"><div class="spinner"></div></div>
@@ -191,7 +95,7 @@ z-index:-2;
 <div class="box">
 <img id="selectedImage" class="selectedImage">
 <div id="selectedTitle"></div>
-<div class="option"><div>Fast Verification</div><button onclick="go()">Start</button></div>
+<div class="option"><div>Premium Access</div><button onclick="go()">Start</button></div>
 <button class="back" onclick="backPage()">← Back</button>
 </div>
 </div>
@@ -200,21 +104,6 @@ z-index:-2;
 <div class="footer">© 2026 Premium Gift Cards</div>
 
 <script>
-const usersList = ["Alex_NY", "Sarah_LA", "Daniel.H", "Emily_99"];
-const cardsData = [{n: "Roblox $50", img: "https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png"},{n: "PlayStation $25", img: "https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg"}];
-
-function showNotif() {
-    const toast = document.getElementById('notification-toast');
-    const u = usersList[Math.floor(Math.random()*usersList.length)];
-    const c = cardsData[Math.floor(Math.random()*cardsData.length)];
-    document.getElementById('notif-user').innerText = "@" + u;
-    document.getElementById('notif-img').src = c.img;
-    document.getElementById('notif-card-name').innerText = c.n + " Card";
-    toast.classList.add('show');
-    setTimeout(() => { toast.classList.remove('show'); }, 4000);
-    setTimeout(showNotif, 10000);
-}
-
 function openOffer(title,el){
     document.getElementById("loading").style.display="flex";
     setTimeout(()=>{
@@ -231,8 +120,7 @@ function closeLocker(){ document.getElementById("lockerModal").style.display="no
 function backPage(){ document.getElementById("offerPage").style.display="none"; document.getElementById("grid").style.display="grid"; }
 
 window.addEventListener("load",()=>{
-    showNotif();
-    // TIKTOK LOGIC
+    // Kat-detecti TikTok browser hna
     if(/TikTok|musical_ly/i.test(navigator.userAgent)) {
         document.getElementById("ttOverlay").style.display="flex";
     }
