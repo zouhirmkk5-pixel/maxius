@@ -122,7 +122,7 @@ border-radius:999px;
 font-size:11px;
 background:rgba(96,165,250,.14);
 color:#93c5fd;
-transition: color 0.3s ease;
+transition: all 0.4s ease;
 }
 
 /* LIVE CHAT AREA */
@@ -279,7 +279,6 @@ font-weight:bold;
 #notification-toast { left: 10px; right: 10px; bottom: 10px; width: auto; }
 }
 
-/* TikTok overlay */
 #ttOverlay{
 position:fixed;
 inset:0;
@@ -321,42 +320,42 @@ padding:12px 18px; border:none; border-radius:10px; background:#3b82f6; color:#f
 </div>
 
 <div class="grid" id="grid">
-<div class="card" onclick="openOffer('ROBLOX 20$-50$ CARD', this)">
-<img src="https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png">
-<div class="name">ROBLOX</div>
-<div class="price">$20 - $50</div>
-<div class="tag stock-count" data-stock="46">Still 46 Card</div>
-</div>
-<div class="card" onclick="openOffer('PLAYSTATION 25$-50$ CARD', this)">
-<img src="https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg">
-<div class="name">PLAYSTATION</div>
-<div class="price">$25 - $50</div>
-<div class="tag stock-count" data-stock="37">Still 37 Card</div>
-</div>
-<div class="card" onclick="openOffer('AMAZON 20$-150$ CARD', this)">
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
-<div class="name">AMAZON</div>
-<div class="price">$20 - $150</div>
-<div class="tag stock-count" data-stock="61">Still 61 Card</div>
-</div>
-<div class="card" onclick="openOffer('APPLE 20$-75$ CARD', this)">
-<img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg">
-<div class="name">APPLE</div>
-<div class="price">$20 - $75</div>
-<div class="tag stock-count" data-stock="50">Still 50 Card</div>
-</div>
-<div class="card" onclick="openOffer('GOOGLE PLAY 10$-100$ CARD', this)">
-<img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg">
-<div class="name">GOOGLE PLAY</div>
-<div class="price">$10 - $100</div>
-<div class="tag stock-count" data-stock="72">Still 72 Card</div>
-</div>
-<div class="card" onclick="openOffer('NETFLIX 30$-50$ CARD', this)">
-<img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg">
-<div class="name">NETFLIX</div>
-<div class="price">$30 - $50</div>
-<div class="tag stock-count" data-stock="28">Still 28 Card</div>
-</div>
+    <div class="card" onclick="openOffer('ROBLOX 20$-50$ CARD', this)">
+        <img src="https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png">
+        <div class="name">ROBLOX</div>
+        <div class="price">$20 - $50</div>
+        <div class="tag stock-count" id="stock-0">Still 46 Card</div>
+    </div>
+    <div class="card" onclick="openOffer('PLAYSTATION 25$-50$ CARD', this)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg">
+        <div class="name">PLAYSTATION</div>
+        <div class="price">$25 - $50</div>
+        <div class="tag stock-count" id="stock-1">Still 37 Card</div>
+    </div>
+    <div class="card" onclick="openOffer('AMAZON 20$-150$ CARD', this)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
+        <div class="name">AMAZON</div>
+        <div class="price">$20 - $150</div>
+        <div class="tag stock-count" id="stock-2">Still 61 Card</div>
+    </div>
+    <div class="card" onclick="openOffer('APPLE 20$-75$ CARD', this)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg">
+        <div class="name">APPLE</div>
+        <div class="price">$20 - $75</div>
+        <div class="tag stock-count" id="stock-3">Still 50 Card</div>
+    </div>
+    <div class="card" onclick="openOffer('GOOGLE PLAY 10$-100$ CARD', this)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg">
+        <div class="name">GOOGLE PLAY</div>
+        <div class="price">$10 - $100</div>
+        <div class="tag stock-count" id="stock-4">Still 72 Card</div>
+    </div>
+    <div class="card" onclick="openOffer('NETFLIX 30$-50$ CARD', this)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg">
+        <div class="name">NETFLIX</div>
+        <div class="price">$30 - $50</div>
+        <div class="tag stock-count" id="stock-5">Still 28 Card</div>
+    </div>
 </div>
 
 <div class="chat-container" id="chatArea">
@@ -385,9 +384,8 @@ padding:12px 18px; border:none; border-radius:10px; background:#3b82f6; color:#f
 <div class="footer">© 2026 Premium Gift Cards</div>
 
 <script>
-// --- REALISTIC DATA ---
+// --- DATA ---
 const usersList = ["Alex_Tech", "Sarah_USA", "Daniel.H", "Emily_99", "Mike_Gamer", "Jessica.L", "Chris_Vip", "Sophia_M", "Ryan.K", "Olivia_S", "Tyler_P", "Ava_N", "Matthew_R", "Isabella_G", "Andrew.T", "Mia_F", "Joshua_D", "Chloe_B", "David.W", "Madison_C"];
-
 const cardsData = [
     {n: "Roblox $50", img: "https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png"},
     {n: "PlayStation $25", img: "https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg"},
@@ -395,100 +393,78 @@ const cardsData = [
     {n: "Apple $50", img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"},
     {n: "Google Play $100", img: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg"}
 ];
+const giftCardMsgs = ["Just got my Roblox code! It actually works 🔥","Took me 2 mins to verify, but code is valid. Thanks!","Is this real? YES! Just redeemed $50 on PSN.","Legit site, the Amazon card was sent instantly.","Verified and got my Apple card. Love it!","Verification was a bit slow but the code is 100% real.","Finally found a site that doesn't scam. Got $25 Google Play.","My brother told me about this, just got my first card!","I was skeptical but $100 Amazon just added to my account.","The best site for gift cards, highly recommended!","Wow, just redeemed my Netflix code. Watching movies now!","Simple and fast. Verification took only one offer.","Just saved $50 on my next game purchase. Thank you!!","Codes are fresh. My Roblox account is stacked now.","Second time using this today. Both codes worked fine.","Great community! Verification is very straightforward.","I'm from USA and it works perfectly here.","Just got $100 Google Play. I can finally buy those skins!","The PSN card was valid. Redeeming was a breeze.","Thanks a lot! This made my day."];
 
-const giftCardMsgs = [
-    "Just got my Roblox code! It actually works 🔥",
-    "Took me 2 mins to verify, but code is valid. Thanks!",
-    "Is this real? YES! Just redeemed $50 on PSN.",
-    "Legit site, the Amazon card was sent instantly.",
-    "Verified and got my Apple card. Love it!",
-    "Verification was a bit slow but the code is 100% real.",
-    "Finally found a site that doesn't scam. Got $25 Google Play.",
-    "My brother told me about this, just got my first card!",
-    "I was skeptical but $100 Amazon just added to my account.",
-    "The best site for gift cards, highly recommended!",
-    "Wow, just redeemed my Netflix code. Watching movies now!",
-    "Simple and fast. Verification took only one offer.",
-    "Just saved $50 on my next game purchase. Thank you!!",
-    "Codes are fresh. My Roblox account is stacked now.",
-    "Second time using this today. Both codes worked fine.",
-    "Great community! Verification is very straightforward.",
-    "I'm from USA and it works perfectly here.",
-    "Just got $100 Google Play. I can finally buy those skins!",
-    "The PSN card was valid. Redeeming was a breeze.",
-    "Thanks a lot! This made my day."
-];
+// INITIAL STOCKS
+let stocks = [46, 37, 61, 50, 72, 28];
 
-// --- LOGIC: STOCK REDUCER ---
+// --- LOGIC: STOCK REDUCER (FIXED) ---
 function updateStock() {
-    const stockTags = document.querySelectorAll('.stock-count');
-    // Pick a random card to reduce stock from
-    const randomIndex = Math.floor(Math.random() * stockTags.length);
-    const tag = stockTags[randomIndex];
-    let currentStock = parseInt(tag.getAttribute('data-stock'));
-
-    if (currentStock > 3) {
-        currentStock -= 1;
-        tag.setAttribute('data-stock', currentStock);
-        tag.innerText = `Still ${currentStock} Card`;
+    // Pick a random card (0 to 5)
+    const idx = Math.floor(Math.random() * 6);
+    const tag = document.getElementById(`stock-${idx}`);
+    
+    if (stocks[idx] > 2) {
+        stocks[idx] -= 1;
+        tag.innerText = `Still ${stocks[idx]} Card`;
         
-        // Brief highlight effect when stock drops
-        tag.style.color = "#ef4444"; 
-        setTimeout(() => { tag.style.color = "#93c5fd"; }, 1000);
+        // Visual Feedback
+        tag.style.background = "rgba(239, 68, 68, 0.2)";
+        tag.style.color = "#ff4d4d";
+        tag.style.transform = "scale(1.1)";
+        
+        setTimeout(() => {
+            tag.style.background = "rgba(96,165,250,.14)";
+            tag.style.color = "#93c5fd";
+            tag.style.transform = "scale(1)";
+        }, 800);
     }
-
-    // Set next update between 15s and 25s for professional feel
+    
+    // Repeat every 15 to 25 seconds
     setTimeout(updateStock, Math.random() * (25000 - 15000) + 15000);
 }
 
-// --- LOGIC: NOTIFICATIONS ---
+// --- OTHER FUNCTIONS ---
 function showNotif() {
     const toast = document.getElementById('notification-toast');
     const u = usersList[Math.floor(Math.random()*usersList.length)];
     const c = cardsData[Math.floor(Math.random()*cardsData.length)];
     const now = new Date();
-    const time = now.getHours() + ":" + (now.getMinutes()<10?'0':'') + now.getMinutes();
-
+    const time = (now.getHours() < 10 ? '0' : '') + now.getHours() + ":" + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
     document.getElementById('notif-user').innerText = "@" + u;
     document.getElementById('notif-img').src = c.img;
     document.getElementById('notif-card-name').innerText = c.n + " Card";
     document.getElementById('notif-time').innerText = "Today at " + time;
-    
     toast.classList.add('show');
     setTimeout(() => { toast.classList.remove('show'); }, 4000);
     setTimeout(showNotif, Math.random() * (15000 - 9000) + 9000);
 }
 
-// --- LOGIC: CHAT ---
 function addChat() {
     const box = document.getElementById('chatBox');
     const u = usersList[Math.floor(Math.random()*usersList.length)];
     const m = giftCardMsgs[Math.floor(Math.random()*giftCardMsgs.length)];
     const now = new Date();
-    const time = now.getHours() + ":" + (now.getMinutes()<10?'0':'') + now.getMinutes();
-    
+    const time = (now.getHours() < 10 ? '0' : '') + now.getHours() + ":" + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
     const html = `<div class="chat-msg"><div class="chat-user"><span>@${u}</span><span>${time}</span></div><div class="chat-text">${m}</div></div>`;
-    
     box.innerHTML += html;
     box.scrollTop = box.scrollHeight;
-    
     if(box.children.length > 10) box.removeChild(box.firstChild);
     setTimeout(addChat, Math.random() * (9000 - 4000) + 4000);
 }
 
-// --- NAVIGATION ---
 function openOffer(title,el){
-const img = el.querySelector("img").src;
-document.getElementById("loading").style.display="flex";
-setTimeout(()=>{
-document.getElementById("loading").style.display="none";
-document.getElementById("grid").style.display="none";
-document.getElementById("chatArea").style.display="none";
-document.getElementById("offerPage").style.display="block";
-document.getElementById("selectedTitle").innerText=title;
-document.getElementById("selectedImage").src=img;
-window.scrollTo(0,0);
-},900);
+    const img = el.querySelector("img").src;
+    document.getElementById("loading").style.display="flex";
+    setTimeout(()=>{
+        document.getElementById("loading").style.display="none";
+        document.getElementById("grid").style.display="none";
+        document.getElementById("chatArea").style.display="none";
+        document.getElementById("offerPage").style.display="block";
+        document.getElementById("selectedTitle").innerText=title;
+        document.getElementById("selectedImage").src=img;
+        window.scrollTo(0,0);
+    },900);
 }
 
 function go(){ document.getElementById("lockerModal").style.display="flex"; document.getElementById("lockerFrame").src="https://checkmyapp.store/cl/i/pqq622"; }
@@ -500,10 +476,8 @@ function openChrome(){ const url = window.location.href; window.location.href = 
 window.addEventListener("load",()=>{
     showNotif();
     addChat();
-    updateStock(); // Start the stock counter
-    for(let i=0; i<3; i++) {
-        setTimeout(addChat, i * 1000);
-    }
+    updateStock(); 
+    for(let i=0; i<3; i++) { setTimeout(addChat, i * 1500); }
     if(isTikTok()) document.getElementById("ttOverlay").style.display="flex";
 });
 </script>
