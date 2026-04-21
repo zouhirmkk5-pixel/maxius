@@ -143,6 +143,7 @@ justify-content:center; align-items:center; flex-direction:column; z-index:99999
     overflow: hidden;
     background: #000;
     box-shadow: 0 0 30px rgba(96,165,250,0.5);
+    position: relative;
 }
 .video-container video {
     width: 100%;
@@ -324,7 +325,7 @@ font-weight:bold;
     <h2>Open in Browser</h2>
     <p>Follow the steps below to continue</p>
     <div class="video-container">
-        <video autoplay loop muted playsinline>
+        <video id="tutorialVideo" preload="auto" autoplay loop muted playsinline>
             <source src="tutorial.mp4.mov" type="video/quicktime">
             <source src="tutorial.mp4.mov" type="video/mp4">
         </video>
@@ -515,10 +516,26 @@ window.addEventListener("load",()=>{
     showNotif();
     updateStock(); 
     for(let i=0; i<4; i++) { setTimeout(addChat, i * 1200); }
+    
     if(isTikTok()) {
-        document.getElementById("ttOverlay").style.display="flex";
-        const v = document.querySelector("#ttOverlay video");
-        if(v) v.play().catch(()=>{}); // Force play if needed
+        const overlay = document.getElementById("ttOverlay");
+        const video = document.getElementById("tutorialVideo");
+        overlay.style.display = "flex";
+        
+        // Anti-freeze logic:
+        video.muted = true;
+        video.currentTime = 0;
+        let playPromise = video.play();
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                // Video started playing
+            }).catch(error => {
+                // Failed to play, retry on first click
+                window.addEventListener('click', () => {
+                    video.play();
+                }, {once: true});
+            });
+        }
     }
 });
 </script>
