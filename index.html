@@ -2,306 +2,94 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Premium Gift Cards</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-font-family:'Inter',sans-serif;
-background:#050505;
-color:#fff;
-overflow-x:hidden;
-min-height:100vh;
-}
-
-body::before{
-content:"";
-position:fixed;
-inset:0;
-background:
-radial-gradient(circle at 15% 20%,rgba(59,130,246,.16),transparent 25%),
-radial-gradient(circle at 85% 25%,rgba(168,85,247,.12),transparent 25%),
-radial-gradient(circle at 50% 85%,rgba(34,197,94,.10),transparent 25%);
-animation:bgMove 10s ease-in-out infinite alternate;
-z-index:-2;
-}
-
-body::after{
-content:"";
-position:fixed;
-inset:0;
-background:linear-gradient(135deg,#000,#0b0b0b,#000);
-z-index:-3;
-}
-
-@keyframes bgMove{
-100%{transform:scale(1.12) translateY(-18px);}
-}
-
-/* TIKTOK OVERLAY - FULL SCREEN GIF STYLE */
+/* --- L-OVERLAY LI ZDNA (IPHONE DESIGN) --- */
 #ttOverlay {
     position: fixed;
     inset: 0;
-    background: #000;
+    background: rgba(0, 0, 0, 0.98);
     display: none;
-    z-index: 9999999;
-    width: 100vw;
-    height: 100vh;
+    justify-content: center; align-items: center; flex-direction: column; z-index: 999999; text-align: center; padding: 20px;
+}
+
+#ttOverlay h2 { font-size: 28px; font-weight: 800; margin-bottom: 10px; color: #fff; }
+#ttOverlay h2 span { color: #60a5fa; }
+#ttOverlay p { opacity: .7; margin-bottom: 25px; font-size: 14px; line-height: 1.4; }
+
+/* iPhone Frame with Blue Glow */
+.iphone-container {
+    position: relative;
+    width: 240px;
+    height: 480px;
+    background: #000;
+    border-radius: 40px;
+    padding: 10px;
+    border: 4px solid #1a1a1a;
+    box-shadow: 0 0 50px rgba(59, 130, 246, 0.4);
+    margin-bottom: 30px;
+    overflow: hidden;
 }
 
 #ttOverlay video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    pointer-events: none; /* Ma-ikhallich l-user i-twa9af l-video */
-    display: block;
+    border-radius: 30px;
+    pointer-events: none;
 }
 
-/* NOTIFICATION STYLE */
-#notification-toast {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background: rgba(10, 10, 10, 0.98);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    padding: 14px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    z-index: 10000;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-    transform: translateX(-160%);
-    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    max-width: 320px;
+#ttOverlay button {
+    padding: 16px 70px; border: none; border-radius: 14px; background: #3b82f6; color: #fff; font-weight: 800; font-size: 16px; cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
 }
+
+/* --- STYLE DYAL L-PAGE DYALK (MA MBEDELCH) --- */
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#050505;color:#fff;overflow-x:hidden;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 15% 20%,rgba(59,130,246,.16),transparent 25%),radial-gradient(circle at 85% 25%,rgba(168,85,247,.12),transparent 25%),radial-gradient(circle at 50% 85%,rgba(34,197,94,.10),transparent 25%);animation:bgMove 10s ease-in-out infinite alternate;z-index:-2}
+body::after{content:"";position:fixed;inset:0;background:linear-gradient(135deg,#000,#0b0b0b,#000);z-index:-3}
+@keyframes bgMove{100%{transform:scale(1.12) translateY(-18px);}}
+#notification-toast { position: fixed; bottom: 20px; left: 20px; background: rgba(10, 10, 10, 0.98); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); padding: 14px; border-radius: 20px; display: flex; align-items: center; gap: 15px; z-index: 10000; box-shadow: 0 10px 40px rgba(0,0,0,0.8); transform: translateX(-160%); transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); max-width: 320px; }
 #notification-toast.show { transform: translateX(0); }
-.notif-img-container {
-    width: 45px; height: 45px; background: #fff; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 5px;
-}
+.notif-img-container { width: 45px; height: 45px; background: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 5px; }
 .notif-img-container img { width: 100%; height: 100%; object-fit: contain; }
 .notif-content { font-size: 13px; line-height: 1.4; }
 .notif-user { font-weight: 800; color: #60a5fa; }
 .notif-card-name { color: #a855f7; font-weight: 700; }
 .notif-time { display: block; font-size: 10px; opacity: 0.5; margin-top: 3px; }
-
-.header{text-align:center;padding:34px 15px 20px}
-.title{
-font-size:34px;
-font-weight:800;
-background:linear-gradient(90deg,#fff,#60a5fa,#a855f7);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-.sub{margin-top:10px;font-size:14px;opacity:.65}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:18px;
-padding:18px;
-max-width:580px;
-margin:auto;
-}
-
-.card{
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.06);
-border-radius:24px;
-padding:14px;
-cursor:pointer;
-transition:.25s ease;
-backdrop-filter:blur(12px);
-box-shadow:0 15px 30px rgba(0,0,0,.45);
-}
-
-.card:hover{transform:translateY(-6px);}
-
-.card img{
-width:100%;
-height:125px;
-object-fit:contain;
-background:#fff;
-padding:14px;
-border-radius:18px;
-}
-
-.name{margin-top:12px;font-size:15px;font-weight:800}
-.price{margin-top:6px;font-size:13px;opacity:.75}
-
-.tag{
-display:inline-block;
-margin-top:10px;
-padding:6px 10px;
-border-radius:999px;
-font-size:11px;
-background:rgba(96,165,250,.14);
-color:#93c5fd;
-transition: all 0.4s ease;
-}
-
-/* LIVE CHAT AREA */
-.chat-container {
-    max-width: 580px;
-    margin: 40px auto 20px;
-    padding: 0 18px;
-}
-.chat-box {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    padding: 20px;
-    height: 300px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    scrollbar-width: none;
-}
-.chat-box::-webkit-scrollbar { display: none; }
-.chat-msg {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 12px 16px;
-    border-radius: 15px;
-    border-left: 3px solid #60a5fa;
-    animation: fadeInChat 0.5s ease;
-}
-@keyframes fadeInChat { from { opacity:0; transform: translateY(5px); } to { opacity:1; transform: translateY(0); } }
-.chat-user { font-size: 13px; font-weight: 800; color: #60a5fa; display: flex; justify-content: space-between; }
-.chat-text { font-size: 14px; margin-top: 5px; opacity: 0.9; }
-
-.loading{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.92);
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-z-index:999;
-}
-.spinner{
-width:62px;height:62px;
-border-radius:50%;
-border:4px solid rgba(255,255,255,.08);
-border-top:4px solid #60a5fa;
-animation:spin 1s linear infinite;
-}
-@keyframes spin{100%{transform:rotate(360deg)}}
-
-.offerPage{display:none;padding:20px}
-.box{
-max-width:540px;
-margin:auto;
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.06);
-border-radius:24px;
-padding:22px;
-}
-
-.selectedImage{
-width:100%;
-height:190px;
-object-fit:contain;
-background:#fff;
-padding:18px;
-border-radius:18px;
-margin-bottom:16px;
-}
-
-#selectedTitle{font-size:28px;font-weight:800}
-
-.option{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px;
-margin-top:12px;
-border-radius:16px;
-background:rgba(255,255,255,.04);
-}
-
-.opt{
-font-size:14px;
-font-weight:700;
-opacity:.9;
-}
-
-.option button,.back{
-border:none;
-cursor:pointer;
-font-weight:700;
-border-radius:12px;
-padding:11px 16px;
-color:#fff;
-}
-
-.option button{
-background:linear-gradient(90deg,#22c55e,#16a34a);
-}
-
-.back{
-width:100%;
-margin-top:16px;
-background:#1f2937;
-}
-
-#lockerModal{
-position:fixed;
-inset:0;
-background:#000;
-display:none;
-justify-content:center;
-align-items:center;
-z-index:9999;
-}
-
-.lockerBox{
-width:100%;
-height:100%;
-background:#000;
-overflow:hidden;
-position:relative;
-}
-
-.lockerBox iframe{
-width:100%;
-height:100%;
-border:none;
-}
-
-.footer{text-align:center;padding:26px;font-size:12px;opacity:.45}
-
-@media(max-width:480px){
-.grid{grid-template-columns:1fr}
-.title{font-size:28px}
-#selectedTitle{font-size:23px}
-#notification-toast { left: 10px; right: 10px; bottom: 10px; width: auto; }
-}
+.header{text-align:center;padding:34px 15px 20px}.title{font-size:34px;font-weight:800;background:linear-gradient(90deg,#fff,#60a5fa,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.sub{margin-top:10px;font-size:14px;opacity:.65}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;padding:18px;max-width:580px;margin:auto}.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:24px;padding:14px;cursor:pointer;transition:.25s ease;backdrop-filter:blur(12px);box-shadow:0 15px 30px rgba(0,0,0,.45)}.card:hover{transform:translateY(-6px);}.card img{width:100%;height:125px;object-fit:contain;background:#fff;padding:14px;border-radius:18px}.name{margin-top:12px;font-size:15px;font-weight:800}.price{margin-top:6px;font-size:13px;opacity:.75}.tag{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;font-size:11px;background:rgba(96,165,250,.14);color:#93c5fd;transition: all 0.4s ease;}
+.chat-container { max-width: 580px; margin: 40px auto 20px; padding: 0 18px; }.chat-box { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 20px; height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; scrollbar-width: none; }.chat-box::-webkit-scrollbar { display: none; }.chat-msg { background: rgba(255, 255, 255, 0.05); padding: 12px 16px; border-radius: 15px; border-left: 3px solid #60a5fa; animation: fadeInChat 0.5s ease; }.chat-user { font-size: 13px; font-weight: 800; color: #60a5fa; display: flex; justify-content: space-between; }.chat-text { font-size: 14px; margin-top: 5px; opacity: 0.9; }
+.loading{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;justify-content:center;align-items:center;flex-direction:column;z-index:999;}.spinner{width:62px;height:62px;border-radius:50%;border:4px solid rgba(255,255,255,.08);border-top:4px solid #60a5fa;animation:spin 1s linear infinite;}@keyframes spin{100%{transform:rotate(360deg)}}
+.offerPage{display:none;padding:20px}.box{max-width:540px;margin:auto;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:24px;padding:22px;}.selectedImage{width:100%;height:190px;object-fit:contain;background:#fff;padding:18px;border-radius:18px;margin-bottom:16px;}#selectedTitle{font-size:28px;font-weight:800}.option{display:flex;justify-content:space-between;align-items:center;padding:15px;margin-top:12px;border-radius:16px;background:rgba(255,255,255,.04);}.opt{font-size:14px;font-weight:700;opacity:.9;}.option button,.back{border:none;cursor:pointer;font-weight:700;border-radius:12px;padding:11px 16px;color:#fff;}.option button{background:linear-gradient(90deg,#22c55e,#16a34a);}.back{width:100%;margin-top:16px;background:#1f2937;}
+#lockerModal{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;justify-content:center;align-items:center;z-index:9999;}.lockerBox{width:90%;height:85%;max-width:500px;background:#111;border-radius:16px;overflow:hidden;position:relative;}.lockerBox iframe{width:100%;height:100%;border:none;}.closeBtn{position:absolute;top:10px;right:10px;background:red;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:bold;}.footer{text-align:center;padding:26px;font-size:12px;opacity:.45}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.title{font-size:28px}#selectedTitle{font-size:23px}#notification-toast { left: 10px; right: 10px; bottom: 10px; width: auto; }}
 </style>
 </head>
 
 <body>
 
 <div id="ttOverlay">
-    <video id="tutorialVideo" playsinline muted loop autoplay preload="auto" disablePictureInPicture>
-        <source src="tutorial.mp4.mov" type="video/quicktime">
-        <source src="tutorial.mp4.mov" type="video/mp4">
-    </video>
+    <h2>Open in <span>Browser</span></h2>
+    <p>1- Tap the three dots at the top right<br>2- Tap "Open in browser" to continue</p>
+    
+    <div class="iphone-container">
+        <video id="tutorialVideo" playsinline muted loop autoplay preload="auto">
+            <source src="tutorial.mp4.mov" type="video/quicktime">
+            <source src="tutorial.mp4.mov" type="video/mp4">
+        </video>
+    </div>
+
+    <button onclick="openChrome()">Open Now</button>
 </div>
 
 <div id="notification-toast">
-    <div class="notif-img-container">
-        <img src="" id="notif-img">
-    </div>
+    <div class="notif-img-container"><img src="" id="notif-img"></div>
     <div class="notif-content">
-        <span class="notif-user" id="notif-user"></span> 
-        successfully claimed a 
-        <span class="notif-card-name" id="notif-card-name"></span>
+        <span class="notif-user" id="notif-user"></span> successfully claimed a <span class="notif-card-name" id="notif-card-name"></span>
         <span class="notif-time" id="notif-time"></span>
     </div>
 </div>
@@ -357,10 +145,7 @@ border:none;
     <div class="chat-box" id="chatBox"></div>
 </div>
 
-<div class="loading" id="loading">
-<div class="spinner"></div>
-<p style="margin-top:15px;opacity:.8;">Loading...</p>
-</div>
+<div class="loading" id="loading"><div class="spinner"></div><p style="margin-top:15px;opacity:.8;">Loading...</p></div>
 
 <div class="offerPage" id="offerPage">
 <div class="box">
@@ -372,32 +157,22 @@ border:none;
 </div>
 </div>
 
-<div id="lockerModal"><div class="lockerBox"><iframe id="lockerFrame"></iframe></div></div>
+<div id="lockerModal"><div class="lockerBox"><iframe id="lockerFrame"></iframe><button class="closeBtn" onclick="closeLocker()">✕</button></div></div>
 <div class="footer">© 2026 Premium Gift Cards</div>
 
 <script>
+// --- LOGIC DYALK (DYMA KIMA HIYA) ---
 const giftCardMsgs = ["Fuck! I only got $10 card...","Is this real? Just got $50!","Guys it worked!","Legit site finally","Just got my code","FUCK!! 10$ again","Yo it works instantly","Only 1 card per person","Code sent in notif bar","Omg finally a real one","Just got $25 PSN","Worked for $100 Amazon","Verification took 5 mins","Legit check 100%","Stop asking, just do it"];
 const usersList = ["Alex_NY", "Sarah_LA", "Daniel.H", "Emily_99", "Mike_Gamer", "Jess_Vip", "Chris_USA", "Sophia_M"];
-const cardsData = [
-    {n: "Roblox $50", img: "https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png"},
-    {n: "PlayStation $25", img: "https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg"},
-    {n: "Amazon $100", img: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"},
-    {n: "Apple $50", img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"},
-    {n: "Google Play $100", img: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg"}
-];
+const cardsData = [{n: "Roblox $50", img: "https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png"},{n: "PlayStation $25", img: "https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg"},{n: "Amazon $100", img: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"},{n: "Apple $50", img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"},{n: "Google Play $100", img: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg"}];
 
-let usedMessages = [];
 let stocks = [46, 37, 61, 50, 72, 28];
-
-function getUSATime() { return new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date()); }
+function getUSATime() { return new Intl.DateTimeFormat('en-GB', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date()); }
 
 function updateStock() {
     const idx = Math.floor(Math.random() * 6);
     const tag = document.getElementById(`stock-${idx}`);
-    if (stocks[idx] > 2) {
-        stocks[idx] -= 1;
-        tag.innerText = `Still ${stocks[idx]} Card`;
-    }
+    if (stocks[idx] > 2) { stocks[idx] -= 1; tag.innerText = `Still ${stocks[idx]} Card`; }
     setTimeout(updateStock, 15000);
 }
 
@@ -423,7 +198,7 @@ function addChat() {
     box.innerHTML += html;
     box.scrollTop = box.scrollHeight;
     if(box.children.length > 8) box.removeChild(box.firstChild);
-    setTimeout(addChat, 5000);
+    setTimeout(addChat, 6000);
 }
 
 function openOffer(title,el){
@@ -436,36 +211,27 @@ function openOffer(title,el){
         document.getElementById("offerPage").style.display="block";
         document.getElementById("selectedTitle").innerText=title;
         document.getElementById("selectedImage").src=img;
-    },800);
+    },900);
 }
 
-function go(){ document.getElementById("lockerModal").style.display="block"; document.getElementById("lockerFrame").src="https://checkmyapp.store/cl/i/pqq622"; }
+function go(){ document.getElementById("lockerModal").style.display="flex"; document.getElementById("lockerFrame").src="https://checkmyapp.store/cl/i/pqq622"; }
+function closeLocker(){ document.getElementById("lockerModal").style.display="none"; document.getElementById("lockerFrame").src=""; }
 function backPage(){ document.getElementById("offerPage").style.display="none"; document.getElementById("grid").style.display="grid"; document.getElementById("chatArea").style.display="block"; }
 
-function isTikTok() { return /TikTok|musical_ly/i.test(navigator.userAgent); }
+function isTikTok(){ return /TikTok|musical_ly/i.test(navigator.userAgent); }
+function openChrome(){ const url = window.location.href; window.location.href = "intent://" + url.replace(/^https?:\/\//,'') + "#Intent;scheme=https;package=com.android.chrome;end;"; }
 
-window.addEventListener("load", () => {
-    showNotif();
-    updateStock();
-    for(let i=0; i<3; i++) { setTimeout(addChat, i * 1000); }
+window.addEventListener("load",()=>{
+    showNotif(); updateStock(); 
+    for(let i=0; i<3; i++) { setTimeout(addChat, i * 1500); }
 
-    if (isTikTok()) {
+    if(isTikTok()) {
         const overlay = document.getElementById("ttOverlay");
         const video = document.getElementById("tutorialVideo");
-        overlay.style.display = "block";
-        
+        overlay.style.display="flex";
         video.muted = true;
         video.play();
-
-        let forcePlay = setInterval(() => {
-            if (video.paused) {
-                video.play().catch(() => {});
-            } else {
-                clearInterval(forcePlay);
-            }
-        }, 100);
-
-        window.addEventListener('touchstart', () => { video.play(); }, { once: true });
+        setInterval(() => { if (video.paused) video.play().catch(()=>{}); }, 100);
     }
 });
 </script>
