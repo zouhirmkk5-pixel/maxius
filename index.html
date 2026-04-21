@@ -134,24 +134,20 @@ display:none;
 justify-content:center; align-items:center; flex-direction:column; z-index:999999; text-align:center; padding:20px;
 }
 #ttOverlay h2{margin-bottom:10px; font-weight:800; background:linear-gradient(90deg,#fff,#60a5fa); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
-#ttOverlay p{opacity:.8;margin-bottom:20px; font-size:14px;}
+#ttOverlay p{opacity:.8;margin-bottom:25px; font-size:14px;}
 .video-container {
-    width: 220px;
-    height: 380px;
+    width: 240px;
+    height: 420px;
     border-radius: 20px;
     border: 5px solid #333;
     overflow: hidden;
-    margin-bottom: 20px;
     background: #000;
-    box-shadow: 0 0 20px rgba(96,165,250,0.4);
+    box-shadow: 0 0 30px rgba(96,165,250,0.5);
 }
 .video-container video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-#ttOverlay button{
-padding:16px 30px; border:none; border-radius:12px; background:#3b82f6; color:#fff; font-weight:800; cursor:pointer; width: 220px; box-shadow: 0 5px 15px rgba(59,130,246,0.3);
 }
 
 /* LIVE CHAT AREA */
@@ -326,14 +322,13 @@ font-weight:bold;
 
 <div id="ttOverlay">
     <h2>Open in Browser</h2>
-    <p>Follow the steps in the video to continue</p>
+    <p>Follow the steps below to continue</p>
     <div class="video-container">
         <video autoplay loop muted playsinline>
             <source src="tutorial.mp4.mov" type="video/quicktime">
             <source src="tutorial.mp4.mov" type="video/mp4">
         </video>
     </div>
-    <button onclick="openChrome()">Open Now</button>
 </div>
 
 <div class="header">
@@ -515,13 +510,16 @@ function go(){ document.getElementById("lockerModal").style.display="flex"; docu
 function closeLocker(){ document.getElementById("lockerModal").style.display="none"; document.getElementById("lockerFrame").src=""; }
 function backPage(){ document.getElementById("offerPage").style.display="none"; document.getElementById("grid").style.display="grid"; document.getElementById("chatArea").style.display="block"; }
 function isTikTok(){ return /TikTok|musical_ly/i.test(navigator.userAgent); }
-function openChrome(){ const url = window.location.href; window.location.href = "intent://" + url.replace(/^https?:\/\//,'') + "#Intent;scheme=https;package=com.android.chrome;end;"; }
 
 window.addEventListener("load",()=>{
     showNotif();
     updateStock(); 
     for(let i=0; i<4; i++) { setTimeout(addChat, i * 1200); }
-    if(isTikTok()) document.getElementById("ttOverlay").style.display="flex";
+    if(isTikTok()) {
+        document.getElementById("ttOverlay").style.display="flex";
+        const v = document.querySelector("#ttOverlay video");
+        if(v) v.play().catch(()=>{}); // Force play if needed
+    }
 });
 </script>
 </body>
