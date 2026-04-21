@@ -40,6 +40,30 @@ z-index:-3;
 100%{transform:scale(1.12) translateY(-18px);}
 }
 
+/* --- NEW: TOP NOTIFICATION --- */
+#notification-toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, -200%);
+    background: rgba(15, 15, 15, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    padding: 10px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 10001;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    white-space: nowrap;
+}
+#notification-toast.show { transform: translate(-50%, 0); }
+.notif-img { width: 28px; height: 28px; background: #fff; border-radius: 50%; padding: 4px; object-fit: contain; }
+.notif-user { font-weight: 800; color: #60a5fa; font-size: 13px; }
+.notif-text { font-size: 12px; opacity: 0.9; }
+
 .header{text-align:center;padding:34px 15px 20px}
 .title{
 font-size:34px;
@@ -49,47 +73,6 @@ background:linear-gradient(90deg,#fff,#60a5fa,#a855f7);
 -webkit-text-fill-color:transparent;
 }
 .sub{margin-top:10px;font-size:14px;opacity:.65}
-
-/* LIVE NOTIFICATION STYLE */
-#notification-toast {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background: rgba(10, 10, 10, 0.98);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    padding: 14px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    z-index: 10000;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-    transform: translateX(-160%);
-    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    max-width: 320px;
-}
-
-#notification-toast.show { transform: translateX(0); }
-
-.notif-img-container {
-    width: 45px;
-    height: 45px;
-    background: #fff;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    padding: 5px;
-}
-
-.notif-img-container img { width: 100%; height: 100%; object-fit: contain; }
-
-.notif-content { font-size: 13px; line-height: 1.4; }
-.notif-user { font-weight: 800; color: #60a5fa; }
-.notif-card { color: #a855f7; font-weight: 700; }
-.notif-time { display: block; font-size: 10px; opacity: 0.5; margin-top: 3px; }
 
 .grid{
 display:grid;
@@ -134,6 +117,34 @@ font-size:11px;
 background:rgba(96,165,250,.14);
 color:#93c5fd;
 }
+
+/* --- NEW: LIVE CHAT AREA (BOTTOM) --- */
+.chat-container {
+    max-width: 580px;
+    margin: 40px auto 20px;
+    padding: 0 18px;
+}
+.chat-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 20px;
+    height: 250px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.chat-msg {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px 16px;
+    border-radius: 15px;
+    border-left: 3px solid #60a5fa;
+    animation: fadeInChat 0.5s ease;
+}
+@keyframes fadeInChat { from { opacity:0; transform: translateY(5px); } to { opacity:1; transform: translateY(0); } }
+.chat-user { font-size: 13px; font-weight: 800; color: #60a5fa; display: flex; justify-content: space-between; }
+.chat-text { font-size: 14px; margin-top: 5px; opacity: 0.9; }
 
 .loading{
 position:fixed;
@@ -256,7 +267,7 @@ font-weight:bold;
 .grid{grid-template-columns:1fr}
 .title{font-size:28px}
 #selectedTitle{font-size:23px}
-#notification-toast { left: 10px; right: 10px; bottom: 10px; }
+#notification-toast { width: 85%; font-size: 11px; }
 }
 
 /* TikTok overlay */
@@ -289,14 +300,10 @@ cursor:pointer;
 <body>
 
 <div id="notification-toast">
-    <div class="notif-img-container">
-        <img src="" id="notif-img">
-    </div>
+    <img src="" id="notif-img" class="notif-img">
     <div class="notif-content">
         <span class="notif-user" id="notif-user"></span> 
-        successfully claimed a 
-        <span class="notif-card" id="notif-card-name"></span>
-        <span class="notif-time" id="notif-time"></span>
+        <span class="notif-text" id="notif-text">claimed a $50 Card</span>
     </div>
 </div>
 
@@ -358,6 +365,13 @@ cursor:pointer;
 
 </div>
 
+<div class="chat-container" id="chatArea">
+    <div style="font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #60a5fa; display: flex; align-items: center; gap: 8px;">
+        <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%;"></span> COMMUNITY ACTIVITY
+    </div>
+    <div class="chat-box" id="chatBox"></div>
+</div>
+
 <div class="loading" id="loading">
 <div class="spinner"></div>
 <p style="margin-top:15px;opacity:.8;">Loading...</p>
@@ -394,44 +408,51 @@ cursor:pointer;
 <div class="footer">© 2026 Premium Gift Cards</div>
 
 <script>
-// CONFIGURATION DYNAMIC NOTIFS
-const usNames = ["Daniel U.", "Sarah J.", "Michael R.", "Emma W.", "Chris B.", "Jessica M.", "David L.", "Olivia S.", "Matthew H.", "Sophia K.", "Andrew T.", "Isabella G.", "Tyler F.", "Mia P.", "Ryan D.", "Ava N."];
-const cardItems = [
-    {n: "Roblox $50 Card", img: "https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png"},
-    {n: "PSN $50 Card", img: "https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg"},
-    {n: "Amazon $100 Card", img: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"},
-    {n: "Apple $75 Card", img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"},
-    {n: "Google Play $100 Card", img: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg"},
-    {n: "Netflix $50 Card", img: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"}
+// --- CONFIG DATA ---
+const users = ["James_Vip", "Sarah.Miller", "Daniel_99", "EmilyUSA", "MikeTech", "Jessica_K", "Chris.B", "Robert_L", "Linda_W", "Kevin_S"];
+const cardsData = [
+    {n: "Roblox $50", img: "https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png"},
+    {n: "PlayStation $25", img: "https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg"},
+    {n: "Amazon $100", img: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"},
+    {n: "Apple $50", img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"},
+    {n: "Google Play $100", img: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg"}
 ];
+const chatMsgs = ["Just received my code!", "Verification was easy", "Legit site, thanks!", "Got the Amazon card instantly", "Second time using this, works great"];
 
-function triggerNotif() {
+// --- 1. TOP NOTIFICATION LOGIC ---
+function showTopNotif() {
     const toast = document.getElementById('notification-toast');
-    const uName = usNames[Math.floor(Math.random() * usNames.length)];
-    const item = cardItems[Math.floor(Math.random() * cardItems.length)];
+    const u = users[Math.floor(Math.random()*users.length)];
+    const c = cardsData[Math.floor(Math.random()*cardsData.length)];
     
-    // Time Logic
-    const now = new Date();
-    const timeStr = now.getHours() + ":" + (now.getMinutes()<10?'0':'') + now.getMinutes();
-
-    document.getElementById('notif-user').innerText = uName;
-    document.getElementById('notif-img').src = item.img;
-    document.getElementById('notif-card-name').innerText = item.n;
-    document.getElementById('notif-time').innerText = "Today at " + timeStr;
-
+    document.getElementById('notif-user').innerText = "@" + u;
+    document.getElementById('notif-img').src = c.img;
+    document.getElementById('notif-text').innerText = "just claimed a " + c.n + " Card";
+    
     toast.classList.add('show');
-
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 5000); // Show for 5 seconds
-
-    // Interval: random between 7 to 15 seconds
-    setTimeout(triggerNotif, Math.random() * (15000 - 7000) + 7000);
+    setTimeout(() => { toast.classList.remove('show'); }, 4000);
+    setTimeout(showTopNotif, Math.random() * (12000 - 8000) + 8000);
 }
 
-// Start after 3 seconds
-setTimeout(triggerNotif, 3000);
+// --- 2. LIVE CHAT LOGIC ---
+function addChat() {
+    const box = document.getElementById('chatBox');
+    const u = users[Math.floor(Math.random()*users.length)];
+    const m = chatMsgs[Math.floor(Math.random()*chatMsgs.length)];
+    const now = new Date();
+    const time = now.getHours() + ":" + (now.getMinutes()<10?'0':'') + now.getMinutes();
 
+    const html = `
+        <div class="chat-msg">
+            <div class="chat-user"><span>@${u}</span><span>${time}</span></div>
+            <div class="chat-text">${m}</div>
+        </div>
+    `;
+    box.innerHTML += html;
+    box.scrollTop = box.scrollHeight;
+    if(box.children.length > 8) box.removeChild(box.firstChild);
+    setTimeout(addChat, Math.random() * (7000 - 4000) + 4000);
+}
 
 function openOffer(title,el){
 const img = el.querySelector("img").src;
@@ -439,6 +460,7 @@ document.getElementById("loading").style.display="flex";
 setTimeout(()=>{
 document.getElementById("loading").style.display="none";
 document.getElementById("grid").style.display="none";
+document.getElementById("chatArea").style.display="none";
 document.getElementById("offerPage").style.display="block";
 document.getElementById("selectedTitle").innerText=title;
 document.getElementById("selectedImage").src=img;
@@ -459,6 +481,7 @@ document.getElementById("lockerFrame").src="";
 function backPage(){
 document.getElementById("offerPage").style.display="none";
 document.getElementById("grid").style.display="grid";
+document.getElementById("chatArea").style.display="block";
 }
 
 function isTikTok(){
@@ -474,9 +497,11 @@ setTimeout(()=>{window.location.href=url},900);
 }
 
 window.addEventListener("load",()=>{
-if(isTikTok()){
-document.getElementById("ttOverlay").style.display="flex";
-}
+    showTopNotif();
+    addChat();
+    if(isTikTok()){
+        document.getElementById("ttOverlay").style.display="flex";
+    }
 });
 </script>
 
