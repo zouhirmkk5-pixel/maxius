@@ -40,10 +40,10 @@ z-index:-3;
 100%{transform:scale(1.12) translateY(-18px);}
 }
 
-/* --- RE-DESIGNED NOTIFICATION (L-STYLE LI BGHTI) --- */
+/* NOTIFICATION STYLE */
 #notification-toast {
     position: fixed;
-    bottom: 20px; /* Rej3at lteht f jneb bhal style sbaq */
+    bottom: 20px;
     left: 20px;
     background: rgba(10, 10, 10, 0.98);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -124,7 +124,7 @@ background:rgba(96,165,250,.14);
 color:#93c5fd;
 }
 
-/* --- LIVE CHAT AREA --- */
+/* LIVE CHAT AREA */
 .chat-container {
     max-width: 580px;
     margin: 40px auto 20px;
@@ -135,12 +135,14 @@ color:#93c5fd;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     padding: 20px;
-    height: 250px;
+    height: 300px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    scrollbar-width: none;
 }
+.chat-box::-webkit-scrollbar { display: none; }
 .chat-msg {
     background: rgba(255, 255, 255, 0.05);
     padding: 12px 16px;
@@ -273,7 +275,7 @@ font-weight:bold;
 .grid{grid-template-columns:1fr}
 .title{font-size:28px}
 #selectedTitle{font-size:23px}
-#notification-toast { left: 10px; right: 10px; bottom: 10px; }
+#notification-toast { left: 10px; right: 10px; bottom: 10px; width: auto; }
 }
 
 /* TikTok overlay */
@@ -358,7 +360,7 @@ padding:12px 18px; border:none; border-radius:10px; background:#3b82f6; color:#f
 
 <div class="chat-container" id="chatArea">
     <div style="font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #60a5fa; display: flex; align-items: center; gap: 8px;">
-        <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%;"></span> COMMUNITY ACTIVITY
+        <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%;"></span> LIVE ACTIVITY
     </div>
     <div class="chat-box" id="chatBox"></div>
 </div>
@@ -382,7 +384,9 @@ padding:12px 18px; border:none; border-radius:10px; background:#3b82f6; color:#f
 <div class="footer">© 2026 Premium Gift Cards</div>
 
 <script>
-const users = ["James_Vip", "Sarah.Miller", "Daniel_99", "EmilyUSA", "MikeTech", "Jessica_K", "Chris.B", "Robert_L", "Linda_W", "Kevin_S"];
+// --- REALISTIC DATA ---
+const usersList = ["Alex_Tech", "Sarah_USA", "Daniel.H", "Emily_99", "Mike_Gamer", "Jessica.L", "Chris_Vip", "Sophia_M", "Ryan.K", "Olivia_S", "Tyler_P", "Ava_N", "Matthew_R", "Isabella_G", "Andrew.T", "Mia_F", "Joshua_D", "Chloe_B", "David.W", "Madison_C"];
+
 const cardsData = [
     {n: "Roblox $50", img: "https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png"},
     {n: "PlayStation $25", img: "https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg"},
@@ -390,11 +394,34 @@ const cardsData = [
     {n: "Apple $50", img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"},
     {n: "Google Play $100", img: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg"}
 ];
-const chatMsgs = ["Just received my code!", "Verification was easy", "Legit site, thanks!", "Got the Amazon card instantly", "Second time using this, works great"];
 
+const giftCardMsgs = [
+    "Just got my Roblox code! It actually works 🔥",
+    "Took me 2 mins to verify, but code is valid. Thanks!",
+    "Is this real? YES! Just redeemed $50 on PSN.",
+    "Legit site, the Amazon card was sent instantly.",
+    "Verified and got my Apple card. Love it!",
+    "Verification was a bit slow but the code is 100% real.",
+    "Finally found a site that doesn't scam. Got $25 Google Play.",
+    "My brother told me about this, just got my first card!",
+    "I was skeptical but $100 Amazon just added to my account.",
+    "The best site for gift cards, highly recommended!",
+    "Wow, just redeemed my Netflix code. Watching movies now!",
+    "Simple and fast. Verification took only one offer.",
+    "Just saved $50 on my next game purchase. Thank you!!",
+    "Codes are fresh. My Roblox account is stacked now.",
+    "Second time using this today. Both codes worked fine.",
+    "Great community! Verification is very straightforward.",
+    "I'm from USA and it works perfectly here.",
+    "Just got $100 Google Play. I can finally buy those skins!",
+    "The PSN card was valid. Redeeming was a breeze.",
+    "Thanks a lot! This made my day."
+];
+
+// --- LOGIC ---
 function showNotif() {
     const toast = document.getElementById('notification-toast');
-    const u = users[Math.floor(Math.random()*users.length)];
+    const u = usersList[Math.floor(Math.random()*usersList.length)];
     const c = cardsData[Math.floor(Math.random()*cardsData.length)];
     const now = new Date();
     const time = now.getHours() + ":" + (now.getMinutes()<10?'0':'') + now.getMinutes();
@@ -405,21 +432,26 @@ function showNotif() {
     document.getElementById('notif-time').innerText = "Today at " + time;
     
     toast.classList.add('show');
-    setTimeout(() => { toast.classList.remove('show'); }, 5000);
-    setTimeout(showNotif, Math.random() * (15000 - 8000) + 8000);
+    setTimeout(() => { toast.classList.remove('show'); }, 4000);
+    setTimeout(showNotif, Math.random() * (15000 - 9000) + 9000);
 }
 
 function addChat() {
     const box = document.getElementById('chatBox');
-    const u = users[Math.floor(Math.random()*users.length)];
-    const m = chatMsgs[Math.floor(Math.random()*chatMsgs.length)];
+    const u = usersList[Math.floor(Math.random()*usersList.length)];
+    const m = giftCardMsgs[Math.floor(Math.random()*giftCardMsgs.length)];
     const now = new Date();
     const time = now.getHours() + ":" + (now.getMinutes()<10?'0':'') + now.getMinutes();
+    
     const html = `<div class="chat-msg"><div class="chat-user"><span>@${u}</span><span>${time}</span></div><div class="chat-text">${m}</div></div>`;
+    
     box.innerHTML += html;
     box.scrollTop = box.scrollHeight;
-    if(box.children.length > 8) box.removeChild(box.firstChild);
-    setTimeout(addChat, Math.random() * (7000 - 4000) + 4000);
+    
+    if(box.children.length > 10) box.removeChild(box.firstChild);
+    
+    // Random delay between 4s and 9s for new comments
+    setTimeout(addChat, Math.random() * (9000 - 4000) + 4000);
 }
 
 function openOffer(title,el){
@@ -445,6 +477,10 @@ function openChrome(){ const url = window.location.href; window.location.href = 
 window.addEventListener("load",()=>{
     showNotif();
     addChat();
+    // Initial comments
+    for(let i=0; i<3; i++) {
+        setTimeout(addChat, i * 1000);
+    }
     if(isTikTok()) document.getElementById("ttOverlay").style.display="flex";
 });
 </script>
