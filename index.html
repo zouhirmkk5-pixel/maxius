@@ -122,6 +122,7 @@ border-radius:999px;
 font-size:11px;
 background:rgba(96,165,250,.14);
 color:#93c5fd;
+transition: color 0.3s ease;
 }
 
 /* LIVE CHAT AREA */
@@ -324,37 +325,37 @@ padding:12px 18px; border:none; border-radius:10px; background:#3b82f6; color:#f
 <img src="https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png">
 <div class="name">ROBLOX</div>
 <div class="price">$20 - $50</div>
-<div class="tag">Still 46 Card</div>
+<div class="tag stock-count" data-stock="46">Still 46 Card</div>
 </div>
 <div class="card" onclick="openOffer('PLAYSTATION 25$-50$ CARD', this)">
 <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg">
 <div class="name">PLAYSTATION</div>
 <div class="price">$25 - $50</div>
-<div class="tag">Still 37 Card</div>
+<div class="tag stock-count" data-stock="37">Still 37 Card</div>
 </div>
 <div class="card" onclick="openOffer('AMAZON 20$-150$ CARD', this)">
 <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
 <div class="name">AMAZON</div>
 <div class="price">$20 - $150</div>
-<div class="tag">Still 61 Card</div>
+<div class="tag stock-count" data-stock="61">Still 61 Card</div>
 </div>
 <div class="card" onclick="openOffer('APPLE 20$-75$ CARD', this)">
 <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg">
 <div class="name">APPLE</div>
 <div class="price">$20 - $75</div>
-<div class="tag">Still 50 Card</div>
+<div class="tag stock-count" data-stock="50">Still 50 Card</div>
 </div>
 <div class="card" onclick="openOffer('GOOGLE PLAY 10$-100$ CARD', this)">
 <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg">
 <div class="name">GOOGLE PLAY</div>
 <div class="price">$10 - $100</div>
-<div class="tag">Still 72 Card</div>
+<div class="tag stock-count" data-stock="72">Still 72 Card</div>
 </div>
 <div class="card" onclick="openOffer('NETFLIX 30$-50$ CARD', this)">
 <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg">
 <div class="name">NETFLIX</div>
 <div class="price">$30 - $50</div>
-<div class="tag">Still 28 Card</div>
+<div class="tag stock-count" data-stock="28">Still 28 Card</div>
 </div>
 </div>
 
@@ -418,7 +419,29 @@ const giftCardMsgs = [
     "Thanks a lot! This made my day."
 ];
 
-// --- LOGIC ---
+// --- LOGIC: STOCK REDUCER ---
+function updateStock() {
+    const stockTags = document.querySelectorAll('.stock-count');
+    // Pick a random card to reduce stock from
+    const randomIndex = Math.floor(Math.random() * stockTags.length);
+    const tag = stockTags[randomIndex];
+    let currentStock = parseInt(tag.getAttribute('data-stock'));
+
+    if (currentStock > 3) {
+        currentStock -= 1;
+        tag.setAttribute('data-stock', currentStock);
+        tag.innerText = `Still ${currentStock} Card`;
+        
+        // Brief highlight effect when stock drops
+        tag.style.color = "#ef4444"; 
+        setTimeout(() => { tag.style.color = "#93c5fd"; }, 1000);
+    }
+
+    // Set next update between 15s and 25s for professional feel
+    setTimeout(updateStock, Math.random() * (25000 - 15000) + 15000);
+}
+
+// --- LOGIC: NOTIFICATIONS ---
 function showNotif() {
     const toast = document.getElementById('notification-toast');
     const u = usersList[Math.floor(Math.random()*usersList.length)];
@@ -436,6 +459,7 @@ function showNotif() {
     setTimeout(showNotif, Math.random() * (15000 - 9000) + 9000);
 }
 
+// --- LOGIC: CHAT ---
 function addChat() {
     const box = document.getElementById('chatBox');
     const u = usersList[Math.floor(Math.random()*usersList.length)];
@@ -449,11 +473,10 @@ function addChat() {
     box.scrollTop = box.scrollHeight;
     
     if(box.children.length > 10) box.removeChild(box.firstChild);
-    
-    // Random delay between 4s and 9s for new comments
     setTimeout(addChat, Math.random() * (9000 - 4000) + 4000);
 }
 
+// --- NAVIGATION ---
 function openOffer(title,el){
 const img = el.querySelector("img").src;
 document.getElementById("loading").style.display="flex";
@@ -477,7 +500,7 @@ function openChrome(){ const url = window.location.href; window.location.href = 
 window.addEventListener("load",()=>{
     showNotif();
     addChat();
-    // Initial comments
+    updateStock(); // Start the stock counter
     for(let i=0; i<3; i++) {
         setTimeout(addChat, i * 1000);
     }
