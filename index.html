@@ -40,7 +40,7 @@ z-index:-3;
 100%{transform:scale(1.12) translateY(-18px);}
 }
 
-/* --- FIX: TT OVERLAY WITH GIF FULL SCREEN --- */
+/* --- TT OVERLAY GIF STYLE --- */
 #ttOverlay {
     position: fixed;
     inset: 0;
@@ -57,23 +57,28 @@ z-index:-3;
 #ttOverlay h2 span { color: #60a5fa; }
 #ttOverlay p { opacity: .7; margin-bottom: 25px; font-size: 14px; line-height: 1.4; }
 
+/* --- QADNA HAD L-PART BACH L-VIDEO IBAN KAML --- */
 .iphone-container {
     position: relative;
-    width: 265px; /* Qyas mzyan l-iphone frame */
-    height: 540px;
+    width: 260px; /* Qyas mzyan l-mobile */
+    height: 520px;
     background: #000;
     border-radius: 40px;
-    border: 5px solid #1a1a1a;
+    padding: 5px;
+    border: 4px solid #1a1a1a;
     box-shadow: 0 0 50px rgba(59, 130, 246, 0.5);
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-/* Hna l-GIF kiban Full Screen bla sda3 l-video */
-#tutorialGif {
+#tutorialVideo {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    pointer-events: none;
+    /* 'contain' hiya l-sir bach l-video matmchi mennu hta blasa */
+    object-fit: contain; 
+    border-radius: 32px;
+    background: #000;
 }
 
 /* NOTIFICATION STYLE */
@@ -323,7 +328,10 @@ font-weight:bold;
     <h2>Open in <span>Browser</span></h2>
     <p>1- Tap the three dots at the top right<br>2- Tap "Open in browser" to continue</p>
     <div class="iphone-container">
-        <img src="tutorial.gif" id="tutorialGif" alt="Loading Tutorial...">
+        <video id="tutorialVideo" playsinline muted loop autoplay preload="auto">
+            <source src="tutorial.mp4.mov" type="video/quicktime">
+            <source src="tutorial.mp4.mov" type="video/mp4">
+        </video>
     </div>
 </div>
 
@@ -529,9 +537,10 @@ window.addEventListener("load",()=>{
     updateStock(); 
     for(let i=0; i<4; i++) { setTimeout(addChat, i * 1200); }
     
-    // UPDATED TT LOGIC: Detection dyal TikTok o t7al overlay
     if(/TikTok|musical_ly/i.test(navigator.userAgent)) {
         document.getElementById("ttOverlay").style.display="flex";
+        const v = document.getElementById("tutorialVideo");
+        v.play().catch(()=>{});
     }
 });
 </script>
