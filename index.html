@@ -384,28 +384,28 @@ padding:12px 18px; border:none; border-radius:10px; background:#3b82f6; color:#f
 <div class="footer">© 2026 Premium Gift Cards</div>
 
 <script>
-// --- UNIQUE MIXED MESSAGES (USA STYLE) ---
+// --- DATA: REALISTIC MIXED MESSAGES ---
 const giftCardMsgs = [
-    "Is this actually real? I've been scammed 4 times today...",
-    "Wait... just got the email. It's actually legit! $50 added.",
-    "FUCK! I only got $10 card while my friend got $100. My luck is trash.",
-    "Does this work on iPhone 15? Someone please confirm.",
-    "Yo it works! Just redeemed my Roblox code. Proof in my bio.",
-    "I'm skeptical... let me try one more time.",
-    "Verification took 5 mins but the $25 Amazon code is working.",
+    "Fuck! I only got $10 card while others got $100. My luck is literally trash.",
+    "Is this actually real? I've been scammed 4 times today on other sites.",
+    "Guys, it worked! But you can only claim 1 card per person.",
+    "Is everyone getting their codes? Just started the offer.",
+    "Wait... just got the notification. It's actually legit! $50 added.",
+    "I'm skeptical... let me try one more time. Does this really work?",
+    "FUCK!! 10$ again... i hate my life. Why can't I get the big ones?",
+    "Yo it works! Just finished the survey and code popped up instantly.",
+    "Warning: You can only benefit from 1 card. Don't waste time trying more.",
+    "Has anyone received the code yet? I'm almost done.",
+    "Just finished the offer and the code was sent in the notification bar!",
+    "Omg it worked!! Finally a real generator for 2026.",
+    "Did you guys get the card? I just got $25 PSN code.",
+    "Can believe it... $100 Amazon just worked. My heart is racing lol.",
+    "Verification took 5 mins but the $50 Apple code is 100% working.",
+    "Only 1 card per account guys. It won't let you do more.",
     "Fuck this site, why did i only get the 10$ one? So unfair.",
-    "OMG IT WORKED!! Finally a real generator for 2026.",
-    "Is there a limit? I want to try for my brother now.",
-    "Just got $50 Apple card. Verification was a bit annoying but worth it.",
-    "Anyone else stuck on the survey? Edit: Nvm, just finished it!",
-    "FUCK YES! $100 PSN card just worked. My heart is racing lol.",
-    "Can't believe I wasted hours on other sites when this was here.",
-    "Why only 10$? I followed all the steps... better than nothing i guess.",
-    "Legit community. Code was fresh and not used before.",
-    "Verified in 2 mins. Netflix is free for me now haha.",
+    "I just got my code in the notification after completing the task. Legit!",
     "Is it just me or is the Google Play card hard to get? Trying again.",
-    "Thanks for the $50 gift card! Worked perfectly in NYC.",
-    "Stop spamming 'fake' in chat, you just need to complete the offer right."
+    "Stop asking if it's real. Just do the offer and see for yourself."
 ];
 
 const usersList = ["Alex_NY", "Sarah_LA", "Daniel.H", "Emily_99", "Mike_Gamer", "Jess_Vip", "Chris_USA", "Sophia_M", "Ryan.K", "Olivia_S", "Ava_N", "Mia_F", "Chloe_B", "David.W", "Nathan_V", "Zoe_M"];
@@ -421,9 +421,9 @@ const cardsData = [
 let usedMessages = [];
 let stocks = [46, 37, 61, 50, 72, 28];
 
-// --- LOGIC: REAL USA TIME (EST/New York) ---
+// --- LOGIC: FORCED NEW YORK TIME (EST/EDT) ---
 function getUSATime() {
-    return new Intl.DateTimeFormat('en-US', {
+    return new Intl.DateTimeFormat('en-GB', {
         timeZone: 'America/New_York',
         hour: '2-digit',
         minute: '2-digit',
