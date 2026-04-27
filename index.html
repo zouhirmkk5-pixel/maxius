@@ -1,548 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Premium Gift Cards</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brawler Rewards - Final Fix</title>
+    <style>
+        :root {
+            --bs-blue: #2b5ce6;
+            --card-purple: #4a1fbc;
+            --accent-green: #afff00;
+        }
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-font-family:'Inter',sans-serif;
-background:#050505;
-color:#fff;
-overflow-x:hidden;
-min-height:100vh;
-}
+        body {
+            background-color: var(--bs-blue);
+            background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px);
+            background-size: 30px 30px;
+            font-family: 'Arial Black', sans-serif;
+            margin: 0; color: white; text-align: center;
+        }
 
-body::before{
-content:"";
-position:fixed;
-inset:0;
-background:
-radial-gradient(circle at 15% 20%,rgba(59,130,246,.16),transparent 25%),
-radial-gradient(circle at 85% 25%,rgba(168,85,247,.12),transparent 25%),
-radial-gradient(circle at 50% 85%,rgba(34,197,94,.10),transparent 25%);
-animation:bgMove 10s ease-in-out infinite alternate;
-z-index:-2;
-}
+        .live-bar { background: rgba(0,0,0,0.5); padding: 8px 0; font-size: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .live-bar span { color: #ff66cc; }
 
-body::after{
-content:"";
-position:fixed;
-inset:0;
-background:linear-gradient(135deg,#000,#0b0b0b,#000);
-z-index:-3;
-}
+        .logo { width: 140px; margin: 20px 0; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
 
-@keyframes bgMove{
-100%{transform:scale(1.12) translateY(-18px);}
-}
+        .stats-panel {
+            background: rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 20px; display: inline-flex; gap: 30px; padding: 12px 30px; margin-bottom: 20px;
+        }
+        .stat-val { display: block; font-size: 18px; font-weight: 900; }
 
-/* --- TT OVERLAY GIF STYLE --- */
-#ttOverlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.98);
-    display: none;
-    justify-content: center; 
-    align-items: center; 
-    flex-direction: column; 
-    z-index: 999999; 
-    text-align: center; 
-    padding: 20px;
-}
-#ttOverlay h2 { font-size: 28px; font-weight: 800; margin-bottom: 10px; color: #fff; }
-#ttOverlay h2 span { color: #60a5fa; }
-#ttOverlay p { opacity: .7; margin-bottom: 25px; font-size: 14px; line-height: 1.4; }
+        .container {
+            width: 95%; max-width: 480px; margin: 0 auto;
+            background: rgba(255, 255, 255, 0.08); border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px; padding: 15px; box-sizing: border-box;
+        }
 
-/* --- QADNA HAD L-PART BACH L-VIDEO IBAN KAML --- */
-.iphone-container {
-    position: relative;
-    width: 260px; /* Qyas mzyan l-mobile */
-    height: 520px;
-    background: #000;
-    border-radius: 40px;
-    padding: 5px;
-    border: 4px solid #1a1a1a;
-    box-shadow: 0 0 50px rgba(59, 130, 246, 0.5);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-#tutorialVideo {
-    width: 100%;
-    height: 100%;
-    /* 'contain' hiya l-sir bach l-video matmchi mennu hta blasa */
-    object-fit: contain; 
-    border-radius: 32px;
-    background: #000;
-}
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 
-/* NOTIFICATION STYLE */
-#notification-toast {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background: rgba(10, 10, 10, 0.98);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    padding: 14px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    z-index: 10000;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-    transform: translateX(-160%);
-    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    max-width: 320px;
-}
-#notification-toast.show { transform: translateX(0); }
-.notif-img-container {
-    width: 45px; height: 45px; background: #fff; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 5px;
-}
-.notif-img-container img { width: 100%; height: 100%; object-fit: contain; }
-.notif-content { font-size: 13px; line-height: 1.4; }
-.notif-user { font-weight: 800; color: #60a5fa; }
-.notif-card-name { color: #a855f7; font-weight: 700; }
-.notif-time { display: block; font-size: 10px; opacity: 0.5; margin-top: 3px; }
+        .card {
+            background: var(--card-purple);
+            background-image: radial-gradient(circle, rgba(142, 102, 255, 0.9) 0%, transparent 75%), 
+                              repeating-conic-gradient(from 0deg, rgba(255,255,255,0.08) 0deg 15deg, transparent 15deg 30deg);
+            border: 2px solid #a385ff; border-radius: 15px;
+            padding: 12px 5px; position: relative; overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
 
-.header{text-align:center;padding:34px 15px 20px}
-.title{
-font-size:34px;
-font-weight:800;
-background:linear-gradient(90deg,#fff,#60a5fa,#a855f7);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-.sub{margin-top:10px;font-size:14px;opacity:.65}
+        .item-name { font-size: 8px; font-weight: 900; height: 22px; text-transform: uppercase; line-height: 1.1; margin-bottom: 5px; }
+        .item-img { width: 90%; height: 70px; object-fit: contain; filter: drop-shadow(0 8px 10px rgba(0,0,0,0.6)); margin: 5px 0; }
+        .price-line { color: var(--accent-green); font-size: 8.5px; font-weight: 900; margin-bottom: 8px; }
+        .old { text-decoration: line-through; opacity: 0.6; margin-right: 2px; }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:18px;
-padding:18px;
-max-width:580px;
-margin:auto;
-}
+        .btn-claim {
+            background: linear-gradient(180deg, #00a2ff 0%, #005fcc 100%);
+            border: 1px solid #00d9ff; border-radius: 6px; color: white;
+            font-size: 11px; font-weight: 900; padding: 8px 0; width: 100%;
+            box-shadow: 0 3px 0 #003a80; cursor: pointer;
+        }
 
-.card{
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.06);
-border-radius:24px;
-padding:14px;
-cursor:pointer;
-transition:.25s ease;
-backdrop-filter:blur(12px);
-box-shadow:0 15px 30px rgba(0,0,0,.45);
-}
-
-.card:hover{transform:translateY(-6px);}
-
-.card img{
-width:100%;
-height:125px;
-object-fit:contain;
-background:#fff;
-padding:14px;
-border-radius:18px;
-}
-
-.name{margin-top:12px;font-size:15px;font-weight:800}
-.price{margin-top:6px;font-size:13px;opacity:.75}
-
-.tag{
-display:inline-block;
-margin-top:10px;
-padding:6px 10px;
-border-radius:999px;
-font-size:11px;
-background:rgba(96,165,250,.14);
-color:#93c5fd;
-transition: all 0.4s ease;
-}
-
-/* LIVE CHAT AREA */
-.chat-container {
-    max-width: 580px;
-    margin: 40px auto 20px;
-    padding: 0 18px;
-}
-.chat-box {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    padding: 20px;
-    height: 300px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    scrollbar-width: none;
-}
-.chat-box::-webkit-scrollbar { display: none; }
-.chat-msg {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 12px 16px;
-    border-radius: 15px;
-    border-left: 3px solid #60a5fa;
-    animation: fadeInChat 0.5s ease;
-}
-@keyframes fadeInChat { from { opacity:0; transform: translateY(5px); } to { opacity:1; transform: translateY(0); } }
-.chat-user { font-size: 13px; font-weight: 800; color: #60a5fa; display: flex; justify-content: space-between; }
-.chat-text { font-size: 14px; margin-top: 5px; opacity: 0.9; }
-
-.loading{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.92);
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-z-index:999;
-}
-.spinner{
-width:62px;height:62px;
-border-radius:50%;
-border:4px solid rgba(255,255,255,.08);
-border-top:4px solid #60a5fa;
-animation:spin 1s linear infinite;
-}
-@keyframes spin{100%{transform:rotate(360deg)}}
-
-.offerPage{display:none;padding:20px}
-.box{
-max-width:540px;
-margin:auto;
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.06);
-border-radius:24px;
-padding:22px;
-}
-
-.selectedImage{
-width:100%;
-height:190px;
-object-fit:contain;
-background:#fff;
-padding:18px;
-border-radius:18px;
-margin-bottom:16px;
-}
-
-#selectedTitle{font-size:28px;font-weight:800}
-
-.option{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px;
-margin-top:12px;
-border-radius:16px;
-background:rgba(255,255,255,.04);
-}
-
-.opt{
-font-size:14px;
-font-weight:700;
-opacity:.9;
-}
-
-.option button,.back{
-border:none;
-cursor:pointer;
-font-weight:700;
-border-radius:12px;
-padding:11px 16px;
-color:#fff;
-}
-
-.option button{
-background:linear-gradient(90deg,#22c55e,#16a34a);
-}
-
-.back{
-width:100%;
-margin-top:16px;
-background:#1f2937;
-}
-
-#lockerModal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.95);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:9999;
-}
-
-.lockerBox{
-width:90%;
-height:85%;
-max-width:500px;
-background:#111;
-border-radius:16px;
-overflow:hidden;
-position:relative;
-}
-
-.lockerBox iframe{
-width:100%;
-height:100%;
-border:none;
-}
-
-.closeBtn{
-position:absolute;
-top:10px;
-right:10px;
-background:red;
-color:#fff;
-border:none;
-padding:8px 12px;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold;
-}
-
-.footer{text-align:center;padding:26px;font-size:12px;opacity:.45}
-
-@media(max-width:480px){
-.grid{grid-template-columns:1fr}
-.title{font-size:28px}
-#selectedTitle{font-size:23px}
-#notification-toast { left: 10px; right: 10px; bottom: 10px; width: auto; }
-}
-</style>
+        footer { background: #000; padding: 40px 20px; margin-top: 50px; text-align: left; font-size: 10px; color: #888; }
+        .sc-logo { width: 95px; float: right; filter: grayscale(1); opacity: 0.8; }
+    </style>
 </head>
-
 <body>
 
-<div id="ttOverlay">
-    <h2>Open in <span>Browser</span></h2>
-    <p>1- Tap the three dots at the top right<br>2- Tap "Open in browser" to continue</p>
-    <div class="iphone-container">
-        <video id="tutorialVideo" playsinline muted loop autoplay preload="auto">
-            <source src="tutorial.mp4.mov" type="video/quicktime">
-            <source src="tutorial.mp4.mov" type="video/mp4">
-        </video>
+    <div class="live-bar">🔥 <b>KazeULTRA</b> just claimed <span>Kaze Legendary!</span></div>
+
+    <img src="https://vignette.wikia.nocookie.net/brawlstars/images/2/21/Brawl_Stars_Logo.png/revision/latest" class="logo" alt="Logo">
+
+    <div class="stats-panel">
+        <div>CLAIMS TODAY<span class="stat-val">3,122</span></div>
+        <div>ONLINE<span class="stat-val">1,088</span></div>
     </div>
-</div>
 
-<div id="notification-toast">
-    <div class="notif-img-container">
-        <img src="" id="notif-img">
+    <div class="container">
+        <div style="font-size:15px; font-weight:900; margin-bottom:15px;">SELECT YOUR REWARD</div>
+        <div class="grid" id="mainGrid"></div>
     </div>
-    <div class="notif-content">
-        <span class="notif-user" id="notif-user"></span> 
-        successfully claimed a 
-        <span class="notif-card-name" id="notif-card-name"></span>
-        <span class="notif-time" id="notif-time"></span>
-    </div>
-</div>
 
-<div class="header">
-<div class="title">PREMIUM GIFT CARDS</div>
-<div class="sub">Select your card and continue</div>
-</div>
+    <footer>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Supercell_logo.svg/1200px-Supercell_logo.svg.png" class="sc-logo" alt="Supercell">
+        <p>Terms of Service | Privacy Policy | Parent's Guide<br>Safe and Fair Play | Supercell Oy</p>
+    </footer>
 
-<div class="grid" id="grid">
-    <div class="card" onclick="openOffer('ROBLOX 20$-50$ CARD', this)">
-        <img src="https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png">
-        <div class="name">ROBLOX</div>
-        <div class="price">$20 - $50</div>
-        <div class="tag stock-count" id="stock-0">Still 46 Card</div>
-    </div>
-    <div class="card" onclick="openOffer('PLAYSTATION 25$-50$ CARD', this)">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg">
-        <div class="name">PLAYSTATION</div>
-        <div class="price">$25 - $50</div>
-        <div class="tag stock-count" id="stock-1">Still 37 Card</div>
-    </div>
-    <div class="card" onclick="openOffer('AMAZON 20$-150$ CARD', this)">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
-        <div class="name">AMAZON</div>
-        <div class="price">$20 - $150</div>
-        <div class="tag stock-count" id="stock-2">Still 61 Card</div>
-    </div>
-    <div class="card" onclick="openOffer('APPLE 20$-75$ CARD', this)">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg">
-        <div class="name">APPLE</div>
-        <div class="price">$20 - $75</div>
-        <div class="tag stock-count" id="stock-3">Still 50 Card</div>
-    </div>
-    <div class="card" onclick="openOffer('GOOGLE PLAY 10$-100$ CARD', this)">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg">
-        <div class="name">GOOGLE PLAY</div>
-        <div class="price">$10 - $100</div>
-        <div class="tag stock-count" id="stock-4">Still 72 Card</div>
-    </div>
-    <div class="card" onclick="openOffer('NETFLIX 30$-50$ CARD', this)">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg">
-        <div class="name">NETFLIX</div>
-        <div class="price">$30 - $50</div>
-        <div class="tag stock-count" id="stock-5">Still 28 Card</div>
-    </div>
-</div>
+    <script>
+        // L-URL l-khira lli ghadi t-khdem f Vercel
+        const baseUrl = "https://raw.githubusercontent.com/zouhirmkk5-pixel/zouhirmkk5-pixel/main/";
 
-<div class="chat-container" id="chatArea">
-    <div style="font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #60a5fa; display: flex; align-items: center; gap: 8px;">
-        <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%;"></span> LIVE ACTIVITY
-    </div>
-    <div class="chat-box" id="chatBox"></div>
-</div>
+        const items = [
+            {n: "ULTRA CHAOS DROPS", p: "$2.99", q: "X6", img: "chaos.JPG"},
+            {n: "2000 GEMS", p: "$19.99", q: "X24", img: "gems.JPG"},
+            {n: "STARR NOVA BOX", p: "$24.99", q: "X100", img: "nova_box.jpg"},
+            {n: "STARR NOVA SKIN", p: "$14.99", q: "X1", img: "nova_skin.jpg"},
+            {n: "DAMIAN BOX", p: "$9.99", q: "X1", img: "damian_box.jpg"},
+            {n: "DAMIAN SKIN", p: "$4.99", q: "X1", img: "damian_skin.JPG"},
+            {n: "BOLT SKIN", p: "$4.99", q: "X1", img: "bolt_skin.JPG"},
+            {n: "BOLT BOX", p: "$9.99", q: "X50", img: "bolt_box.jpg"},
+            {n: "MEGA BOX", p: "$4.99", q: "X10", img: "mega_box.jpg"},
+            {n: "NAJIA BOX", p: "$2.99", q: "X10", img: "najia_box.jpg"},
+            {n: "NAJIA BRAWLER SKIN", p: "$8.99", q: "X1", img: "najia_skin.JPG"},
+            {n: "SIRIUS BOX", p: "$2.99", q: "X6", img: "sirius_box.jpg"},
+            {n: "KAZE", p: "$8.99", q: "X1", img: "kaze.JPG"},
+            {n: "BRAWL PASS PLUS", p: "$8.99", q: "X1", img: "pass.jpg"},
+            {n: "SIRIUS BRAWLER", p: "$4.99", q: "X1", img: "sirius.JPG"},
+            {n: "ULTRA BOX", p: "$9.99", q: "X6", img: "ultra_box.JPG"},
+            {n: "BUFFIES", p: "$2.99", q: "X6", img: "buffies.jpg"},
+            {n: "KEYS", p: "$2.99", q: "X6", img: "keys.jpg"}
+        ];
 
-<div class="loading" id="loading">
-<div class="spinner"></div>
-<p style="margin-top:15px;opacity:.8;">Loading...</p>
-</div>
-
-<div class="offerPage" id="offerPage">
-<div class="box">
-<img id="selectedImage" class="selectedImage">
-<div id="selectedTitle"></div>
-<div class="option"><div class="opt">Fast Verification</div><button onclick="go()">Start</button></div>
-<div class="option"><div class="opt">Backup Option</div><button onclick="go()">Start</button></div>
-<button class="back" onclick="backPage()">← Back</button>
-</div>
-</div>
-
-<div id="lockerModal"><div class="lockerBox"><iframe id="lockerFrame"></iframe><button class="closeBtn" onclick="closeLocker()">✕</button></div></div>
-<div class="footer">© 2026 Premium Gift Cards</div>
-
-<script>
-const giftCardMsgs = [
-    "Fuck! I only got $10 card while others got $100. My luck is literally trash.",
-    "Is this actually real? I've been scammed 4 times today on other sites.",
-    "Guys, it worked! But you can only claim 1 card per person.",
-    "Is everyone getting their codes? Just started the offer.",
-    "Wait... just got the notification. It's actually legit! $50 added.",
-    "I'm skeptical... let me try one more time. Does this really work?",
-    "FUCK!! 10$ again... i hate my life. Why can't I get the big ones?",
-    "Yo it works! Just finished the survey and code popped up instantly.",
-    "Warning: You can only benefit from 1 card. Don't waste time trying more.",
-    "Has anyone received the code yet? I'm almost done.",
-    "Just finished the offer and the code was sent in the notification bar!",
-    "Omg it worked!! Finally a real generator for 2026.",
-    "Did you guys get the card? I just got $25 PSN code.",
-    "Can believe it... $100 Amazon just worked. My heart is racing lol.",
-    "Verification took 5 mins but the $50 Apple code is 100% working.",
-    "Only 1 card per account guys. It won't let you do more.",
-    "Fuck this site, why did i only get the 10$ one? So unfair.",
-    "I just got my code in the notification after completing the task. Legit!",
-    "Is it just me or is the Google Play card hard to get? Trying again.",
-    "Stop asking if it's real. Just do the offer and see for yourself."
-];
-
-const usersList = ["Alex_NY", "Sarah_LA", "Daniel.H", "Emily_99", "Mike_Gamer", "Jess_Vip", "Chris_USA", "Sophia_M", "Ryan.K", "Olivia_S", "Ava_N", "Mia_F", "Chloe_B", "David.W", "Nathan_V", "Zoe_M"];
-
-const cardsData = [
-    {n: "Roblox $50", img: "https://logos-world.net/wp-content/uploads/2020/10/Roblox-Logo.png"},
-    {n: "PlayStation $25", img: "https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg"},
-    {n: "Amazon $100", img: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"},
-    {n: "Apple $50", img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"},
-    {n: "Google Play $100", img: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg"}
-];
-
-let usedMessages = [];
-let stocks = [46, 37, 61, 50, 72, 28];
-
-function getUSATime() {
-    return new Intl.DateTimeFormat('en-GB', {
-        timeZone: 'America/New_York',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-    }).format(new Date());
-}
-
-function updateStock() {
-    const idx = Math.floor(Math.random() * 6);
-    const tag = document.getElementById(`stock-${idx}`);
-    if (stocks[idx] > 2) {
-        stocks[idx] -= 1;
-        tag.innerText = `Still ${stocks[idx]} Card`;
-        tag.style.background = "rgba(239, 68, 68, 0.2)";
-        tag.style.color = "#ff4d4d";
-        tag.style.transform = "scale(1.1)";
-        setTimeout(() => {
-            tag.style.background = "rgba(96,165,250,.14)";
-            tag.style.color = "#93c5fd";
-            tag.style.transform = "scale(1)";
-        }, 800);
-    }
-    setTimeout(updateStock, Math.random() * (25000 - 15000) + 15000);
-}
-
-function showNotif() {
-    const toast = document.getElementById('notification-toast');
-    const u = usersList[Math.floor(Math.random()*usersList.length)];
-    const c = cardsData[Math.floor(Math.random()*cardsData.length)];
-    document.getElementById('notif-user').innerText = "@" + u;
-    document.getElementById('notif-img').src = c.img;
-    document.getElementById('notif-card-name').innerText = c.n + " Card";
-    document.getElementById('notif-time').innerText = "Today at " + getUSATime();
-    toast.classList.add('show');
-    setTimeout(() => { toast.classList.remove('show'); }, 4000);
-    setTimeout(showNotif, Math.random() * (15000 - 9000) + 9000);
-}
-
-function addChat() {
-    const box = document.getElementById('chatBox');
-    const u = usersList[Math.floor(Math.random()*usersList.length)];
-    
-    let availableMsgs = giftCardMsgs.filter(m => !usedMessages.includes(m));
-    if (availableMsgs.length === 0) {
-        usedMessages = [];
-        availableMsgs = giftCardMsgs;
-    }
-    
-    const m = availableMsgs[Math.floor(Math.random()*availableMsgs.length)];
-    usedMessages.push(m);
-
-    const time = getUSATime();
-    const html = `<div class="chat-msg"><div class="chat-user"><span>@${u}</span><span>${time}</span></div><div class="chat-text">${m}</div></div>`;
-    box.innerHTML += html;
-    box.scrollTop = box.scrollHeight;
-    if(box.children.length > 10) box.removeChild(box.firstChild);
-    setTimeout(addChat, Math.random() * (12000 - 4000) + 4000);
-}
-
-function openOffer(title,el){
-    const img = el.querySelector("img").src;
-    document.getElementById("loading").style.display="flex";
-    setTimeout(()=>{
-        document.getElementById("loading").style.display="none";
-        document.getElementById("grid").style.display="none";
-        document.getElementById("chatArea").style.display="none";
-        document.getElementById("offerPage").style.display="block";
-        document.getElementById("selectedTitle").innerText=title;
-        document.getElementById("selectedImage").src=img;
-        window.scrollTo(0,0);
-    },900);
-}
-
-function go(){ document.getElementById("lockerModal").style.display="flex"; document.getElementById("lockerFrame").src="https://checkmyapp.store/cl/i/pqq622"; }
-function closeLocker(){ document.getElementById("lockerModal").style.display="none"; document.getElementById("lockerFrame").src=""; }
-function backPage(){ document.getElementById("offerPage").style.display="none"; document.getElementById("grid").style.display="grid"; document.getElementById("chatArea").style.display="block"; }
-
-window.addEventListener("load",()=>{
-    showNotif();
-    updateStock(); 
-    for(let i=0; i<4; i++) { setTimeout(addChat, i * 1200); }
-    
-    if(/TikTok|musical_ly/i.test(navigator.userAgent)) {
-        document.getElementById("ttOverlay").style.display="flex";
-        const v = document.getElementById("tutorialVideo");
-        v.play().catch(()=>{});
-    }
-});
-</script>
+        const grid = document.getElementById('mainGrid');
+        items.forEach((it) => {
+            grid.innerHTML += `
+                <div class="card">
+                    <div class="item-name">${it.n}</div>
+                    <img src="${baseUrl}${it.img}" class="item-img" alt="${it.n}" onerror="this.src='https://via.placeholder.com/150?text=Error'">
+                    <div class="price-line"><span class="old">${it.p}</span> ${it.q} FREE</div>
+                    <button class="btn-claim">CLAIM</button>
+                </div>
+            `;
+        });
+    </script>
 </body>
 </html>
